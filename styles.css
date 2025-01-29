@@ -1,0 +1,204 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+}
+
+header, footer {
+    background-color: #333;
+    color: white;
+    padding: 15px 0;
+    text-align: center;
+}
+
+header .logo h1 {
+    margin: 0;
+}
+
+header .nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+header .nav a:hover {
+    text-decoration: underline;
+}
+
+/* Stories Container */
+.stories-container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 20px;
+}
+
+.story {
+    width: 120px;
+    height: 213px; /* Adjusted for 9:16 aspect ratio */
+    margin-right: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.story:hover {
+    transform: scale(1.05);
+}
+
+.story img, .story video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.story .add-story {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1877f2;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+/* Upload Container */
+.upload-container {
+    padding: 20px;
+    background-color: #fff;
+    margin: 20px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.upload-container input,
+.upload-container input[type="text"] {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: calc(100% - 22px);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.upload-container button {
+    padding: 10px 20px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.upload-container button:hover {
+    background-color: #1558b0;
+}
+
+.upload-container h2 {
+    text-align: center;
+}
+
+/* Story Viewer Styling */
+.story-viewer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.story-viewer.active {
+    display: flex;
+}
+
+.story-viewer-title {
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.story-viewer-content {
+    width: 500px;
+    height: 650px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: rgba(255, 255, 255, 1); /* Make the container opaque */
+    border-radius: 10px;
+}
+
+.story-viewer img,
+.story-viewer video {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Close Button Styling */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.close-button:hover {
+    background-color: darkred;
+}
+
+/* Progress Bar Styling */
+.progress-bar {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    width: 80%;
+    height: 5px;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: #1877f2;
+    width: 0%;
+    transition: width linear;
+}
+
+/* Footer Styling */
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    border-top: 1px solid #444;
+}
