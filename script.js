@@ -87,7 +87,7 @@ function showStory(index) {
         mediaElement = document.createElement('img');
         mediaElement.src = story.src;
         storyViewerContent.appendChild(mediaElement);
-        updateProgressBar(5000, () => showStory(currentStoryIndex + 1));
+        updateProgressBar(5000, () => showStory(currentStoryIndex + 1)); // 5 seconds for images
     } else if (story.type === 'video') {
         mediaElement = document.createElement('video');
         mediaElement.src = story.src;
@@ -95,7 +95,8 @@ function showStory(index) {
         storyViewerContent.appendChild(mediaElement);
 
         mediaElement.onloadedmetadata = () => {
-            updateProgressBar(mediaElement.duration * 1000, () => showStory(currentStoryIndex + 1));
+            const duration = Math.min(mediaElement.duration * 1000, 15000); // 15 seconds or original duration
+            updateProgressBar(duration, () => showStory(currentStoryIndex + 1));
         };
 
         mediaElement.onended = () => {
@@ -193,3 +194,94 @@ function updateProgressBar(duration, callback) {
         }, duration);
     });
 }
+
+function zoomMedia() {
+    const zoomSlider = document.getElementById('zoomSlider');
+    const mediaPreview = document.getElementById('mediaPreview');
+    const scale = zoomSlider.value;
+
+    Array.from(mediaPreview.children).forEach(mediaElement => {
+        mediaElement.style.transform = `scale(${scale})`;
+    });
+}
+
+function previewMedia() {
+    const mediaInput = document.getElementById('mediaInput');
+    const mediaPreview = document.getElementById('mediaPreview');
+    const storyTitleInput = document.getElementById('storyTitle');
+    const mediaControls = document.getElementById('mediaControls');
+    mediaPreview.innerHTML = '';
+
+    Array.from(mediaInput.files).forEach(file => {
+        const url = URL.createObjectURL(file);
+        let mediaElement;
+
+        if (file.type.startsWith('image/')) {
+            mediaElement = document.createElement('img');
+            mediaElement.src = url;
+        } else if (file.type.startsWith('video/')) {
+            mediaElement = document.createElement('video');
+            mediaElement.src = url;
+            mediaElement.controls = true;
+        }
+
+        mediaPreview.appendChild(mediaElement);
+    });
+
+    if (mediaInput.files.length > 0) {
+        storyTitleInput.style.display = 'block';
+        mediaControls.style.display = 'block';
+        document.getElementById('zoomSlider').style.display = 'block';
+    } else {
+        storyTitleInput.style.display = 'none';
+        mediaControls.style.display = 'none';
+        document.getElementById('zoomSlider').style.display = 'none';
+    }
+}
+
+function cropMedia() {
+    alert('Crop functionality is not implemented yet.');
+}
+
+function adjustDuration() {
+    alert('Adjust duration functionality is not implemented yet.');
+}
+
+function confirmPostStories() {
+    if (confirm('Are you sure you want to post these stories?')) {
+        addStories();
+        closeAddStoryContainer();
+    }
+}
+
+function openAddStoryContainer() {
+    document.getElementById('addStoryContainer').style.display = 'block';
+    document.getElementById('mediaInput').value = '';
+    document.getElementById('storyTitle').value = '';
+    document.getElementById('mediaPreview').innerHTML = '';
+    document.getElementById('storyTitle').style.display = 'none';
+    document.getElementById('mediaControls').style.display = 'none';
+}
+
+function closeAddStoryContainer() {
+    document.getElementById('addStoryContainer').style.display = 'none';
+}
+
+document.getElementById('darkModeToggle').addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    document.querySelector('header').classList.toggle('dark-mode');
+    document.querySelector('footer').classList.toggle('dark-mode');
+    document.querySelector('.stories-container').classList.toggle('dark-mode');
+    document.querySelector('.upload-container').classList.toggle('dark-mode');
+    document.querySelector('.story-viewer').classList.toggle('dark-mode');
+    document.querySelector('.story-viewer-content').classList.toggle('dark-mode');
+    document.querySelector('.add-story-container').classList.toggle('dark-mode');
+    document.querySelector('.upload-container input[type="text"]').classList.toggle('dark-mode');
+
+    const darkModeButton = document.getElementById('darkModeToggle');
+    if (document.body.classList.contains('dark-mode')) {
+        darkModeButton.textContent = 'Light Mode';
+    } else {
+        darkModeButton.textContent = 'Dark Mode';
+    }
+});
