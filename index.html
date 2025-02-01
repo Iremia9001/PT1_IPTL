@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Media Platform</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    <script type="module" src="script.js" defer></script>
+    <script type="module" src="ShowStorybuttons.js" defer></script>
 </head>
 <body>
-
     <!-- Header -->
     <header class="header">
         <div class="logo">
@@ -37,7 +37,9 @@
 
     <div class="story-viewer" id="storyViewer">
         <div class="story-viewer-title" id="storyViewerTitle"></div>
-        <div class="story-viewer-content" id="storyViewerContent"></div>
+        <div class="story-viewer-content" id="storyViewerContent">
+            <!-- container of sotry  -->
+        </div> 
         <div class="progress-bar">
             <div class="progress" id="progressBar"></div>
         </div>
@@ -47,6 +49,5 @@
     <footer class="footer">
         <p>&copy; 2025 My Social Platform</p>
     </footer>
-
 </body>
 </html>

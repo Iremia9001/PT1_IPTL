@@ -1,3 +1,6 @@
+import { socialbutton } from './ShowStorybuttons.js';
+
+
 const storiesContainer = document.getElementById('storiesContainer');
 const storyViewer = document.getElementById('storyViewer');
 const storyViewerContent = document.getElementById('storyViewerContent');
@@ -60,8 +63,11 @@ function addStories() {
     storyTitleInput.value = '';
     mediaInput.value = '';
 }
+window.addStories = addStories;
 
 function showStory(index) {
+    
+
     if (index < 0) {
         index = storyQueue.length - 1; // Loop to the last story
     } else if (index >= storyQueue.length) {
@@ -73,6 +79,8 @@ function showStory(index) {
     const story = storyQueue[index];
     storyViewerContent.innerHTML = '';
     storyViewerTitle.textContent = story.title || ''; // Set the story title dynamically
+    
+
 
     // Create and add the close button
     const closeButton = document.createElement('button');
@@ -80,8 +88,11 @@ function showStory(index) {
     closeButton.classList.add('close-button');
     closeButton.addEventListener('click', closeStoryViewer);
 
-    storyViewer.appendChild(closeButton); // Append close button to the story viewer
 
+
+
+    storyViewer.appendChild(closeButton); // Append close button to the story viewer
+   
     let mediaElement;
     if (story.type === 'image') {
         mediaElement = document.createElement('img');
@@ -131,6 +142,7 @@ function showStory(index) {
 
     // Store the event listener for removal later
     storyViewerContent.handleClick = handleClick;
+    
 }
 
 function closeStoryViewer() {
@@ -145,8 +157,10 @@ function closeStoryViewer() {
 
     // Remove the close button from the story viewer
     const closeButton = storyViewer.querySelector('.close-button');
+    const likeButton = storyViewer.querySelector('.like-button');
     if (closeButton) {
         closeButton.remove();
+
     }
 
     // Remove the click event listener from the story viewer content
