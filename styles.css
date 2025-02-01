@@ -6,6 +6,11 @@ body {
     background-color: #f0f2f5;
 }
 
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
 header, footer {
     background-color: #333;
     color: white;
@@ -13,8 +18,40 @@ header, footer {
     text-align: center;
 }
 
+header.dark-mode, footer.dark-mode {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
 header .logo h1 {
     margin: 0;
+}
+
+header .nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 10px 0; /* Adjust vertical padding */
+}
+
+header .nav .nav-links {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+header .nav .nav-links a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+header .nav .nav-links a:hover {
+    text-decoration: underline;
 }
 
 header .nav a {
@@ -40,9 +77,14 @@ header .nav a:hover {
     margin: 20px;
 }
 
+.stories-container.dark-mode {
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
 .story {
     width: 120px;
-    height: 213px; /* Adjusted for 9:16 aspect ratio */
+    height: 213px; /* 9:16 aspect ratio */
     margin-right: 10px;
     border-radius: 10px;
     overflow: hidden;
@@ -67,9 +109,209 @@ header .nav a:hover {
     justify-content: center;
     background-color: #1877f2;
     color: #fff;
-    font-size: 2rem;
+    font-size: 4rem; /* Enlarge the + */
     font-weight: bold;
     border-radius: 10px;
+    width: 120px;
+    height: 213px; /* 9:16 aspect ratio */
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.story.add-story {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa; /* Slightly different from carousel background */
+    color: #000; /* Black + in light mode */
+    font-size: 4rem; /* Enlarge the + */
+    font-weight: bold;
+    border-radius: 10px;
+    width: 120px;
+    height: 213px; /* 9:16 aspect ratio */
+    cursor: pointer;
+    transition: transform 0.3s;
+    position: relative;
+}
+
+body.dark-mode .story.add-story {
+    background-color: #000; /* Black background in dark mode */
+    color: #fff; /* White + in dark mode */
+}
+
+.story.add-story::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    z-index: 1;
+}
+
+.add-story-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.add-story-container input,
+.add-story-container input[type="text"] {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: calc(100% - 22px);
+    border: none; /* Remove border */
+    text-align: center; /* Center the text */
+}
+
+#zoomSlider {
+    width: 80%;
+    margin: 10px auto;
+}
+
+.file-attachment {
+    display: inline-block;
+    cursor: pointer;
+    width: 400px; /* Revert to original size */
+    height: 400px;
+    background-color: #f0f2f5;
+    border-radius: 10px;
+    text-align: center; /* Center-align */
+    transition: background-color 0.3s;
+    position: relative;
+    top: 0; /* Revert to original position */
+    left: 0;
+    transform: none;
+}
+
+.file-attachment img {
+    width: 50%; /* Shrink to half its size */
+    height: 50%;
+    object-fit: contain;
+    display: block;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.file-attachment:hover {
+    background-color: #e0e0e0;
+}
+
+body.dark-mode .file-attachment {
+    background-color: #333;
+}
+
+body.dark-mode .file-attachment:hover {
+    background-color: #444;
+}
+
+.media-preview {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 2px dashed #ccc; /* Make container size visible */
+    padding: 10px;
+}
+
+.media-preview img,
+.media-preview video {
+    max-width: 100px;
+    max-height: 100px;
+    margin: 5px;
+    border-radius: 5px;
+    transition: transform 0.3s; /* Smooth zoom transition */
+}
+
+.media-controls {
+    margin-top: 10px;
+}
+
+.media-controls button {
+    padding: 5px 10px;
+    margin: 5px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.media-controls button:hover {
+    background-color: #1558b0;
+}
+
+.add-story-container button {
+    padding: 10px 20px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.add-story-container button:hover {
+    background-color: #1558b0;
+}
+
+/* Dark mode styles */
+body.dark-mode .add-story-container {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark-mode .add-story-container input,
+body.dark-mode .add-story-container input[type="text"] {
+    background-color: #333;
+    color: #e0e0e0;
+    border: none;
+}
+
+body.dark-mode .add-story-container input::placeholder,
+body.dark-mode .add-story-container input[type="text"]::placeholder {
+    color: #aaa;
+}
+
+body.dark-mode .file-attachment {
+    background-color: #333;
+}
+
+body.dark-mode .media-preview {
+    border-color: #555;
+}
+
+body.dark-mode .media-controls button {
+    background-color: #555;
+}
+
+body.dark-mode .media-controls button:hover {
+    background-color: #333;
+}
+
+body.dark-mode .add-story-container button {
+    background-color: #555;
+}
+
+body.dark-mode .add-story-container button:hover {
+    background-color: #333;
 }
 
 /* Upload Container */
@@ -84,6 +326,11 @@ header .nav a:hover {
     text-align: center;
 }
 
+.upload-container.dark-mode {
+    background-color: #1e1e1e;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
 .upload-container input,
 .upload-container input[type="text"] {
     display: block;
@@ -92,6 +339,65 @@ header .nav a:hover {
     width: calc(100% - 22px);
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+body.dark-mode .upload-container input,
+body.dark-mode .upload-container input[type="text"] {
+    background-color: #333;
+    color: #e0e0e0;
+    border: 1px solid #555;
+}
+
+body.dark-mode .upload-container input::placeholder,
+body.dark-mode .upload-container input[type="text"]::placeholder {
+    color: #aaa; /* Match the color of "No file chosen" text */
+}
+
+.upload-container input[type="file"] {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: calc(100% - 22px);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+    cursor: pointer;
+}
+
+.upload-container input[type="file"]:hover {
+    background-color: #e0e0e0;
+}
+
+body.dark-mode .upload-container input[type="file"] {
+    background-color: #333;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    caret-color: #e0e0e0; /* Adjust caret color for dark mode */
+}
+
+body.dark-mode .upload-container input[type="file"]:hover {
+    background-color: #444;
+}
+
+body.dark-mode .upload-container input[type="file"]::-webkit-file-upload-button {
+    background-color: #555;
+    color: #e0e0e0;
+    border: 1px solid #555;
+}
+
+body.dark-mode .upload-container input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #666;
+}
+
+body.dark-mode .upload-container input[type="file"]::-moz-file-upload-button {
+    background-color: #555;
+    color: #e0e0e0;
+    border: 1px solid #555;
+}
+
+body.dark-mode .upload-container input[type="file"]::-moz-file-upload-button:hover {
+    background-color: #666;
 }
 
 .upload-container button {
@@ -131,6 +437,10 @@ header .nav a:hover {
     display: flex;
 }
 
+.story-viewer.dark-mode {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
 .story-viewer-title {
     color: #fff;
     margin-bottom: 20px;
@@ -147,6 +457,10 @@ header .nav a:hover {
     position: relative;
     background-color: rgba(255, 255, 255, 1); /* Make the container opaque */
     border-radius: 10px;
+}
+
+.story-viewer-content.dark-mode {
+    background-color: rgba(30, 30, 30, 1); /* Dark mode background for story viewer content */
 }
 
 .story-viewer img,
@@ -201,4 +515,29 @@ header .nav a:hover {
     padding: 10px 0;
     text-align: center;
     border-top: 1px solid #444;
+}
+
+.dark-mode-toggle {
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    position: absolute;
+    left: 5%;
+}
+
+.dark-mode-toggle:hover {
+    background-color: #1558b0;
+}
+
+body.dark-mode .dark-mode-toggle {
+    background-color: #555;
+    color: #fff;
+}
+
+body.dark-mode .dark-mode-toggle:hover {
+    background-color: #333;
 }
