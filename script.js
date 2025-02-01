@@ -87,6 +87,7 @@ function showStory(index) {
     closeButton.textContent = 'Close';
     closeButton.classList.add('close-button');
     closeButton.addEventListener('click', closeStoryViewer);
+    socialbutton();
 
 
 
@@ -218,6 +219,7 @@ function zoomMedia() {
         mediaElement.style.transform = `scale(${scale})`;
     });
 }
+window.zoomMedia = zoomMedia;
 
 function previewMedia() {
     const mediaInput = document.getElementById('mediaInput');
@@ -252,6 +254,7 @@ function previewMedia() {
         document.getElementById('zoomSlider').style.display = 'none';
     }
 }
+window.previewMedia = previewMedia;
 
 function cropMedia() {
     alert('Crop functionality is not implemented yet.');
@@ -267,6 +270,7 @@ function confirmPostStories() {
         closeAddStoryContainer();
     }
 }
+window.confirmPostStories = confirmPostStories;
 
 function openAddStoryContainer() {
     document.getElementById('addStoryContainer').style.display = 'block';
@@ -276,6 +280,7 @@ function openAddStoryContainer() {
     document.getElementById('storyTitle').style.display = 'none';
     document.getElementById('mediaControls').style.display = 'none';
 }
+window.openAddStoryContainer = openAddStoryContainer;
 
 function closeAddStoryContainer() {
     document.getElementById('addStoryContainer').style.display = 'none';
