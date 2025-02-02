@@ -1,6 +1,5 @@
 import { socialbutton } from './ShowStorybuttons.js';
 
-
 const storiesContainer = document.getElementById('storiesContainer');
 const storyViewer = document.getElementById('storyViewer');
 const storyViewerContent = document.getElementById('storyViewerContent');
@@ -73,8 +72,6 @@ function addStories() {
 window.addStories = addStories;
 
 function showStory(index) {
-    
-
     if (index < 0) {
         index = storyQueue.length - 1; // Loop to the last story
     } else if (index >= storyQueue.length) {
@@ -86,21 +83,15 @@ function showStory(index) {
     const story = storyQueue[index];
     storyViewerContent.innerHTML = '';
     storyViewerTitle.textContent = story.title || ''; // Set the story title dynamically
-    
-
 
     // Create and add the close button
     const closeButton = document.createElement('button');
     closeButton.textContent = 'Close';
     closeButton.classList.add('close-button');
     closeButton.addEventListener('click', closeStoryViewer);
-    //socialbutton()
-
-
-
 
     storyViewer.appendChild(closeButton); // Append close button to the story viewer
-   
+
     let mediaElement;
     if (story.type === 'image') {
         mediaElement = document.createElement('img');
@@ -124,7 +115,8 @@ function showStory(index) {
             showStory(currentStoryIndex + 1);
         };
     }
-    socialbutton();
+
+    socialbutton(); // Ensure this does not interfere with the story index
 
     storyViewer.classList.add('active');
 
@@ -154,7 +146,6 @@ function showStory(index) {
 
     // Store the event listener for removal later
     storyViewerContent.handleClick = handleClick;
-    
 }
 
 function closeStoryViewer() {
@@ -169,10 +160,8 @@ function closeStoryViewer() {
 
     // Remove the close button from the story viewer
     const closeButton = storyViewer.querySelector('.close-button');
-
     if (closeButton) {
         closeButton.remove();
-
     }
 
     // Remove the click event listener from the story viewer content
@@ -326,8 +315,6 @@ function openAddStoryContainer() {
     document.getElementById('storyTitle').style.display = 'none';
     document.getElementById('mediaControls').style.display = 'none';
 }
-window.openAddStoryContainer = openAddStoryContainer;
-
 window.openAddStoryContainer = openAddStoryContainer;
 
 function closeAddStoryContainer() {

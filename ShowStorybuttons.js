@@ -1,9 +1,6 @@
-const storyViewer = document.getElementById('storyViewer');
 const storyViewerContent = document.getElementById('storyViewerContent');
 
-// buustons
-
-export function socialbutton(){
+export function socialbutton() {
     const socialButtons = document.createElement('div');
     socialButtons.classList.add('social-buttons');
 
@@ -13,7 +10,7 @@ export function socialbutton(){
 
     const activereaction = document.createElement('li');
     activereaction.classList.add('like-button');
-    
+
     const likeDiv = document.createElement('div');
     likeDiv.classList.add('like');
     const likeSpan = document.createElement('span');
@@ -56,13 +53,6 @@ export function socialbutton(){
     activereaction.appendChild(reactionsContainer);
     listofbuttons.appendChild(activereaction);
 
-
-    activereaction.appendChild(reactionsContainer);
-
-    listofbuttons.appendChild(activereaction);
-
-
-
     // Comment button
     const commentButton = document.createElement('li');
     commentButton.classList.add('comment-button');
@@ -84,7 +74,6 @@ export function socialbutton(){
     const reactionsParent = reactionsContainer;
 
     reactions.forEach(reaction => {
-        
         reaction.addEventListener('click', function (event) {
             event.stopImmediatePropagation();
             reactionsParent.classList.add('wave');
@@ -106,17 +95,11 @@ export function socialbutton(){
         });
     });
 
-    
-
     // Show reactions on hover
     activereaction.addEventListener('mouseenter', function () {
         activereaction.appendChild(reactionsContainer); // Add the reactions container
-       
         reactionsContainer.style.visibility = 'visible';
         reactionsContainer.style.opacity = '1';
-        
-
-
     });
 
     activereaction.addEventListener('mouseleave', function () {
@@ -135,6 +118,6 @@ export function socialbutton(){
 
     reactionsContainer.addEventListener('mouseleave', function () {
         reactionsContainer.style.visibility = 'hidden';
-        reactionsContainer.style.opacity = '0'; 
+        reactionsContainer.style.opacity = '0';
     });
 }
