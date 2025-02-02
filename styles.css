@@ -616,3 +616,62 @@ body.dark-mode .dark-mode-toggle {
 body.dark-mode .dark-mode-toggle:hover {
     background-color: #333;
 }
+
+.social-buttons{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 100px;
+    padding-bottom: 20px;
+}
+
+.list-of-buttons{
+    height: 100%;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-around;
+}
+
+/*button styling*/
+.list-of-buttons li{
+    
+    margin: 0 5px;
+}
+
+.reactions {
+    visibility: hidden; /* Hide reactions initially */
+    opacity: 0; /* Hide reactions initially */
+    transition: visibility 0s, opacity 0.5s linear; /* Smooth transition */
+    position: absolute;
+    bottom: 100%; /* Position above the like button */
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.reactions > div {
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.reactions .wave {
+    animation: wave-animation 0.875s;
+}
+
+.reactions .active {
+    color: red; /* Change color for active reaction */
+}
+
+@keyframes wave-animation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
