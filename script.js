@@ -159,7 +159,7 @@ function closeStoryViewer() {
 
     // Remove the close button from the story viewer
     const closeButton = storyViewer.querySelector('.close-button');
-    const likeButton = storyViewer.querySelector('.like-button');
+
     if (closeButton) {
         closeButton.remove();
 
