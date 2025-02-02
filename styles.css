@@ -179,26 +179,71 @@ body.dark-mode .story.add-story {
 #zoomSlider {
     width: 80%;
     margin: 10px auto;
+    -webkit-appearance: none; /* Remove default styling */
+    appearance: none; /* Remove default styling */
+    background: #ddd; /* Track color */
+    height: 5px; /* Track height */
+    border-radius: 5px; /* Track border radius */
+    outline: none; /* Remove outline */
+}
+
+#zoomSlider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove default styling */
+    appearance: none; /* Remove default styling */
+    width: 20px; /* Thumb width */
+    height: 20px; /* Thumb height */
+    background: #1877f2; /* Thumb color */
+    border-radius: 50%; /* Thumb border radius */
+    cursor: pointer; /* Cursor style */
+    margin-top: -7.5px; /* Center the thumb vertically */
+}
+
+#zoomSlider::-moz-range-thumb {
+    width: 20px; /* Thumb width */
+    height: 20px; /* Thumb height */
+    background: #1877f2; /* Thumb color */
+    border-radius: 50%; /* Thumb border radius */
+    cursor: pointer; /* Cursor style */
+    margin-top: -7.5px; /* Center the thumb vertically */
+}
+
+#zoomSlider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    background: #ddd;
+    border-radius: 5px;
+}
+
+#zoomSlider::-moz-range-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    background: #ddd;
+    border-radius: 5px;
+}
+
+.file-upload-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 .file-attachment {
     display: inline-block;
     cursor: pointer;
-    width: 400px; /* Revert to original size */
-    height: 400px;
+    width: 100px; /* Adjust size as needed */
+    height: 100px;
     background-color: #f0f2f5;
     border-radius: 10px;
     text-align: center; /* Center-align */
     transition: background-color 0.3s;
     position: relative;
-    top: 0; /* Revert to original position */
-    left: 0;
-    transform: none;
 }
 
 .file-attachment img {
-    width: 50%; /* Shrink to half its size */
-    height: 50%;
+    width: 50px; /* Adjust size as needed */
+    height: 50px;
     object-fit: contain;
     display: block;
     margin: auto;
@@ -223,28 +268,39 @@ body.dark-mode .file-attachment:hover {
 .media-preview {
     margin-top: 10px;
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     border: 2px dashed #ccc; /* Make container size visible */
-    padding: 10px;
+    width: 100%; /* Fit inside add story container */
+    max-width: 300px; /* Adjusted width to fit on screen */
+    height: 533px; /* Adjusted height to maintain 9:16 aspect ratio */
+    position: relative;
+    margin: 0 auto; /* Center the container */
+    overflow: hidden; /* Ensure media is cut off if it exceeds the preview border */
 }
 
 .media-preview img,
 .media-preview video {
-    max-width: 100px;
-    max-height: 100px;
-    margin: 5px;
+    max-width: 100%;
+    max-height: 100%;
     border-radius: 5px;
     transition: transform 0.3s; /* Smooth zoom transition */
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .media-controls {
     margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
 }
 
 .media-controls button {
     padding: 5px 10px;
-    margin: 5px;
     background-color: #1877f2;
     color: white;
     border: none;
@@ -272,6 +328,27 @@ body.dark-mode .file-attachment:hover {
     background-color: #1558b0;
 }
 
+.action-buttons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.action-buttons button {
+    padding: 5px 10px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.action-buttons button:hover {
+    background-color: #1558b0;
+}
+
 /* Dark mode styles */
 body.dark-mode .add-story-container {
     background-color: #1e1e1e;
@@ -290,10 +367,6 @@ body.dark-mode .add-story-container input[type="text"]::placeholder {
     color: #aaa;
 }
 
-body.dark-mode .file-attachment {
-    background-color: #333;
-}
-
 body.dark-mode .media-preview {
     border-color: #555;
 }
@@ -306,11 +379,11 @@ body.dark-mode .media-controls button:hover {
     background-color: #333;
 }
 
-body.dark-mode .add-story-container button {
+body.dark-mode .action-buttons button {
     background-color: #555;
 }
 
-body.dark-mode .add-story-container button:hover {
+body.dark-mode .action-buttons button:hover {
     background-color: #333;
 }
 
@@ -449,14 +522,15 @@ body.dark-mode .upload-container input[type="file"]::-moz-file-upload-button:hov
 }
 
 .story-viewer-content {
-    width: 500px;
-    height: 650px;
+    width: 360px; /* Fixed width */
+    height: 640px; /* Fixed height to maintain 9:16 aspect ratio */
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
     background-color: rgba(255, 255, 255, 1); /* Make the container opaque */
     border-radius: 10px;
+    overflow: hidden; /* Ensure content is cut off if it exceeds the container */
 }
 
 .story-viewer-content.dark-mode {
@@ -468,6 +542,7 @@ body.dark-mode .upload-container input[type="file"]::-moz-file-upload-button:hov
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
+    transition: transform 0.3s; /* Smooth zoom transition */
 }
 
 /* Close Button Styling */

@@ -17,6 +17,8 @@ function addStories() {
     const storyTitleInput = document.getElementById('storyTitle');
     const files = Array.from(mediaInput.files);
     const storyTitle = storyTitleInput.value.trim();
+    const zoomSlider = document.getElementById('zoomSlider');
+    const scale = zoomSlider.value;
 
     if (files.length === 0) {
         alert('Please select at least one image or video.');
@@ -33,11 +35,15 @@ function addStories() {
         if (file.type.startsWith("image/")) {
             const img = document.createElement('img');
             img.src = url;
+            img.style.transform = `scale(${scale})`; // Apply the scale
+            img.dataset.scale = scale; // Store the scale in a data attribute
             storyElement.appendChild(img);
         } else if (file.type.startsWith("video/")) {
             const video = document.createElement('video');
             video.src = url;
             video.controls = false;
+            video.style.transform = `scale(${scale})`; // Apply the scale
+            video.dataset.scale = scale; // Store the scale in a data attribute
             storyElement.appendChild(video);
         } else {
             alert('Unsupported file type.');
@@ -50,7 +56,8 @@ function addStories() {
                 .map(child => ({
                     src: child.querySelector('img, video').src,
                     type: child.querySelector('img') ? 'image' : 'video',
-                    title: title
+                    title: title,
+                    scale: child.querySelector('img, video').dataset.scale // Retrieve the scale from the data attribute
                 }));
 
             currentStoryIndex = storyQueue.findIndex(item => item.src === url);
@@ -98,12 +105,14 @@ function showStory(index) {
     if (story.type === 'image') {
         mediaElement = document.createElement('img');
         mediaElement.src = story.src;
+        mediaElement.style.transform = `scale(${story.scale})`; // Apply the scale
         storyViewerContent.appendChild(mediaElement);
         updateProgressBar(5000, () => showStory(currentStoryIndex + 1)); // 5 seconds for images
     } else if (story.type === 'video') {
         mediaElement = document.createElement('video');
         mediaElement.src = story.src;
         mediaElement.autoplay = true;
+        mediaElement.style.transform = `scale(${story.scale})`; // Apply the scale
         storyViewerContent.appendChild(mediaElement);
 
         mediaElement.onloadedmetadata = () => {
@@ -216,7 +225,7 @@ function zoomMedia() {
     const scale = zoomSlider.value;
 
     Array.from(mediaPreview.children).forEach(mediaElement => {
-        mediaElement.style.transform = `scale(${scale})`;
+        mediaElement.style.transform = `translate(-50%, -50%) scale(${scale})`;
     });
 }
 window.zoomMedia = zoomMedia;
@@ -226,6 +235,9 @@ function previewMedia() {
     const mediaPreview = document.getElementById('mediaPreview');
     const storyTitleInput = document.getElementById('storyTitle');
     const mediaControls = document.getElementById('mediaControls');
+    const zoomSlider = document.getElementById('zoomSlider');
+    const discardButton = document.getElementById('discardButton');
+    const postStoriesButton = document.getElementById('postStoriesButton');
     mediaPreview.innerHTML = '';
 
     Array.from(mediaInput.files).forEach(file => {
@@ -246,15 +258,48 @@ function previewMedia() {
 
     if (mediaInput.files.length > 0) {
         storyTitleInput.style.display = 'block';
-        mediaControls.style.display = 'block';
-        document.getElementById('zoomSlider').style.display = 'block';
+        mediaControls.style.display = 'flex';
+        zoomSlider.style.display = 'block';
+        mediaPreview.style.display = 'flex';
+        discardButton.style.display = 'block';
+        postStoriesButton.style.display = 'block';
+        closemediaInput();
     } else {
         storyTitleInput.style.display = 'none';
         mediaControls.style.display = 'none';
-        document.getElementById('zoomSlider').style.display = 'none';
+        zoomSlider.style.display = 'none';
+        mediaPreview.style.display = 'none';
+        discardButton.style.display = 'none';
+        postStoriesButton.style.display = 'none';
+        mediaInput.style.display = 'block';
     }
 }
 window.previewMedia = previewMedia;
+
+function discardMedia() {
+    const mediaInput = document.getElementById('mediaInput');
+    const mediaPreview = document.getElementById('mediaPreview');
+    const storyTitleInput = document.getElementById('storyTitle');
+    const mediaControls = document.getElementById('mediaControls');
+    const zoomSlider = document.getElementById('zoomSlider');
+    const discardButton = document.getElementById('discardButton');
+    const postStoriesButton = document.getElementById('postStoriesButton');
+
+    mediaInput.value = '';
+    mediaPreview.innerHTML = '';
+    storyTitleInput.value = '';
+    storyTitleInput.style.display = 'none';
+    mediaControls.style.display = 'none';
+    zoomSlider.style.display = 'none';
+    mediaPreview.style.display = 'none';
+    discardButton.style.display = 'none';
+    postStoriesButton.style.display = 'none';
+    document.querySelector('.file-attachment').style.display = 'block';
+}
+
+function closemediaInput() {
+    document.querySelector('.file-attachment').style.display = 'none';
+}
 
 function cropMedia() {
     alert('Crop functionality is not implemented yet.');
@@ -282,7 +327,10 @@ function openAddStoryContainer() {
 }
 window.openAddStoryContainer = openAddStoryContainer;
 
+window.openAddStoryContainer = openAddStoryContainer;
+
 function closeAddStoryContainer() {
+    discardMedia();
     document.getElementById('addStoryContainer').style.display = 'none';
 }
 
