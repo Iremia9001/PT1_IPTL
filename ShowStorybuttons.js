@@ -13,6 +13,7 @@ export function socialbutton(){
 
     const activereaction = document.createElement('li');
     activereaction.classList.add('like-button');
+    
     const likeDiv = document.createElement('div');
     likeDiv.classList.add('like');
     const likeSpan = document.createElement('span');
@@ -65,14 +66,14 @@ export function socialbutton(){
     // Comment button
     const commentButton = document.createElement('li');
     commentButton.classList.add('comment-button');
-    commentButton.innerHTML = '<button>Comment</button>';
+    commentButton.innerHTML = '<i class="fa fa-comments-o" aria-hidden="true"></i>';
 
     listofbuttons.appendChild(commentButton);
 
     // Share button
     const shareButton = document.createElement('li');
     shareButton.classList.add('share-button');
-    shareButton.innerHTML = '<button>Share</button>';
+    shareButton.innerHTML = '<i class="fa fa-paper-plane-o" aria-hidden="true"></i>';
 
     listofbuttons.appendChild(shareButton);
 
@@ -105,14 +106,17 @@ export function socialbutton(){
         });
     });
 
-    // Demo heart reaction
     
 
     // Show reactions on hover
     activereaction.addEventListener('mouseenter', function () {
         activereaction.appendChild(reactionsContainer); // Add the reactions container
+       
         reactionsContainer.style.visibility = 'visible';
         reactionsContainer.style.opacity = '1';
+        
+
+
     });
 
     activereaction.addEventListener('mouseleave', function () {
