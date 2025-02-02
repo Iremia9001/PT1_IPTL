@@ -94,7 +94,7 @@ function showStory(index) {
     closeButton.textContent = 'Close';
     closeButton.classList.add('close-button');
     closeButton.addEventListener('click', closeStoryViewer);
-    socialbutton();
+    //socialbutton()
 
 
 
@@ -124,6 +124,7 @@ function showStory(index) {
             showStory(currentStoryIndex + 1);
         };
     }
+    socialbutton();
 
     storyViewer.classList.add('active');
 
