@@ -547,7 +547,7 @@ body.dark-mode .upload-container input[type="file"]::-moz-file-upload-button:hov
 
 /* Close Button Styling */
 .close-button {
-    position: absolute;
+    position: fixed; /* Change to fixed positioning */
     top: 10px;
     right: 10px;
     background-color: red;
