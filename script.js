@@ -380,7 +380,7 @@ function cropMedia() {
             video.pause();
             mediaRecorder.stop();
         }, (end - start) * 1000);
-        video.innerHTML = '';
+        
 
         mediaRecorder.start();
     });
