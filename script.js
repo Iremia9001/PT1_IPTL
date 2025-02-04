@@ -5,11 +5,24 @@ const storyViewer = document.getElementById('storyViewer');
 const storyViewerContent = document.getElementById('storyViewerContent');
 const storyViewerTitle = document.getElementById('storyViewerTitle');
 const progressBar = document.getElementById('progressBar');
+const startHandle = document.getElementById('startHandle');
+const endHandle = document.getElementById('endHandle');
+const timelineRange = document.getElementById('timelineRange');
+const startSliderLabel = document.getElementById('startSliderLabel');
+const endSliderLabel = document.getElementById('endSliderLabel');
+const startValue = document.getElementById('startValue');
+const endValue = document.getElementById('endValue');
+const dynamicTimeLabel = document.getElementById('dynamicTimeLabel');
+const currentStartTimeValue = document.getElementById('currentStartTimeValue');
+const currentEndTimeValue = document.getElementById('currentEndTimeValue');
+const timelineContainer = document.getElementById('timelineContainer');
 
 let storyQueue = [];
 let storyTitles = [];
 let currentStoryIndex = 0;
 let progressTimeout;
+let draggingHandle = null;
+let videoDuration = 15; // Default duration
 
 function addStories() {
     const mediaInput = document.getElementById('mediaInput');
@@ -44,7 +57,11 @@ function addStories() {
             video.controls = false;
             video.style.transform = `scale(${scale})`;
             video.dataset.scale = scale;
+            video.dataset.startTime = startValue.textContent;
+            video.dataset.endTime = endValue.textContent;
             video.loading = 'lazy';
+            video.controlsList = "nodownload nofullscreen noremoteplayback noplaybackrate novolume"; // Remove additional controls
+            video.disablePictureInPicture = true;
             storyElement.appendChild(video);
         } else {
             alert('Unsupported file type.');
@@ -60,7 +77,9 @@ function addStories() {
                     src: child.querySelector('img, video').src,
                     type: child.querySelector('img') ? 'image' : 'video',
                     title: storyTitles[idx], // Retrieve the title from the array
-                    scale: child.querySelector('img, video').dataset.scale
+                    scale: child.querySelector('img, video').dataset.scale,
+                    startTime: child.querySelector('video') ? child.querySelector('video').dataset.startTime : null,
+                    endTime: child.querySelector('video') ? child.querySelector('video').dataset.endTime : null
                 }));
 
             currentStoryIndex = storyQueue.findIndex(item => item.src === url);
@@ -106,6 +125,7 @@ function showStory(index) {
         mediaElement.style.transform = `scale(${story.scale})`;
         mediaElement.loading = 'lazy';
         storyViewerContent.appendChild(mediaElement);
+        timelineContainer.style.display = 'none'; // Hide timeline slider for images
         updateProgressBar(5000, () => showStory(currentStoryIndex + 1));
     } else if (story.type === 'video') {
         mediaElement = document.createElement('video');
@@ -113,15 +133,28 @@ function showStory(index) {
         mediaElement.autoplay = true;
         mediaElement.style.transform = `scale(${story.scale})`;
         mediaElement.loading = 'lazy';
+        mediaElement.controlsList = "nodownload nofullscreen noremoteplayback noplaybackrate novolume"; // Remove additional controls
+        mediaElement.disablePictureInPicture = true;
         storyViewerContent.appendChild(mediaElement);
+        timelineContainer.style.display = 'block'; // Show timeline slider for videos
 
         mediaElement.onloadedmetadata = () => {
-            const duration = Math.min(mediaElement.duration * 1000, 15000);
-            updateProgressBar(duration, () => showStory(currentStoryIndex + 1));
+            videoDuration = mediaElement.duration;
+            updateTimelineHandles();
+            startValue.textContent = story.startTime || '0';
+            endValue.textContent = story.endTime || Math.min(videoDuration, 15).toFixed(1);
+            currentStartTimeValue.textContent = startValue.textContent;
+            currentEndTimeValue.textContent = endValue.textContent;
+            mediaElement.currentTime = parseFloat(startValue.textContent);
+            const playDuration = (parseFloat(endValue.textContent) - parseFloat(startValue.textContent)) * 1000;
+            updateProgressBar(playDuration, () => showStory(currentStoryIndex + 1));
         };
 
-        mediaElement.onended = () => {
-            showStory(currentStoryIndex + 1);
+        mediaElement.ontimeupdate = () => {
+            if (mediaElement.currentTime >= parseFloat(endValue.textContent)) {
+                mediaElement.pause();
+                showStory(currentStoryIndex + 1);
+            }
         };
     }
 
@@ -205,11 +238,31 @@ function previewMedia() {
             mediaElement = document.createElement('img');
             mediaElement.src = url;
             mediaElement.loading = 'lazy';
+            timelineContainer.style.display = 'none'; // Hide timeline slider for images
         } else if (file.type.startsWith('video/')) {
             mediaElement = document.createElement('video');
             mediaElement.src = url;
             mediaElement.controls = true;
+            mediaElement.controlsList = "nodownload nofullscreen noremoteplayback noplaybackrate novolume"; // Remove additional controls
+            mediaElement.disablePictureInPicture = true;
             mediaElement.loading = 'lazy';
+            timelineContainer.style.display = 'block'; // Show timeline slider for videos
+            mediaElement.onloadedmetadata = () => {
+                videoDuration = mediaElement.duration;
+                updateTimelineHandles();
+                startValue.textContent = '0';
+                endValue.textContent = Math.min(videoDuration, 15).toFixed(1); // Ensure max duration is 15
+                currentStartTimeValue.textContent = '0';
+                currentEndTimeValue.textContent = Math.min(videoDuration, 15).toFixed(1);
+                dynamicTimeLabel.style.display = 'block'; // Show the dynamic time label
+                mediaElement.currentTime = parseFloat(startValue.textContent);
+                mediaElement.play();
+                mediaElement.ontimeupdate = () => {
+                    if (mediaElement.currentTime >= parseFloat(endValue.textContent)) {
+                        mediaElement.pause();
+                    }
+                };
+            };
         }
 
         mediaPreview.appendChild(mediaElement);
@@ -231,9 +284,88 @@ function previewMedia() {
         discardButton.style.display = 'none';
         postStoriesButton.style.display = 'none';
         mediaInput.style.display = 'block';
+        dynamicTimeLabel.style.display = 'none'; // Hide the dynamic time label
     }
 }
 window.previewMedia = previewMedia;
+
+function updateTimelineHandles() {
+    const containerWidth = timelineContainer.offsetWidth;
+    const startPercent = parseFloat(startValue.textContent) / videoDuration * 100;
+    const endPercent = parseFloat(endValue.textContent) / videoDuration * 100;
+
+    startHandle.style.left = `${Math.max(startPercent, 0)}%`;
+    endHandle.style.left = `${Math.min(endPercent, 100)}%`;
+    timelineRange.style.left = `${Math.max(startPercent, 0)}%`;
+    timelineRange.style.width = `${Math.min(endPercent, 100) - Math.max(startPercent, 0)}%`;
+
+    currentStartTimeValue.textContent = startValue.textContent;
+    currentEndTimeValue.textContent = endValue.textContent;
+
+    // Update the preview video to reflect the new start and end times
+    const mediaElement = mediaPreview.querySelector('video');
+    if (mediaElement) {
+        mediaElement.currentTime = parseFloat(startValue.textContent);
+        mediaElement.play();
+        mediaElement.ontimeupdate = () => {
+            if (mediaElement.currentTime >= parseFloat(endValue.textContent)) {
+                mediaElement.pause();
+            }
+        };
+    }
+}
+
+function handleDrag(event) {
+    if (!draggingHandle) return;
+
+    const containerWidth = timelineContainer.offsetWidth;
+    const rect = timelineContainer.getBoundingClientRect();
+    const offsetX = event.clientX - rect.left;
+    const percent = Math.max(0, Math.min(100, (offsetX / containerWidth) * 100));
+    const time = (percent / 100) * videoDuration;
+
+    if (draggingHandle === startHandle) {
+        if (time >= parseFloat(endValue.textContent) || (parseFloat(endValue.textContent) - time) > 15) return;
+        startValue.textContent = time.toFixed(1);
+    } else if (draggingHandle === endHandle) {
+        if (time <= parseFloat(startValue.textContent) || (time - parseFloat(startValue.textContent)) > 15) return;
+        endValue.textContent = time.toFixed(1);
+    } else if (draggingHandle === timelineRange) {
+        const duration = parseFloat(endValue.textContent) - parseFloat(startValue.textContent);
+        let newStartTime = time - (duration / 2);
+        let newEndTime = time + (duration / 2);
+
+        if (newStartTime < 0) {
+            newStartTime = 0;
+            newEndTime = duration;
+        } else if (newEndTime > videoDuration) {
+            newEndTime = videoDuration;
+            newStartTime = videoDuration - duration;
+        }
+
+        startValue.textContent = newStartTime.toFixed(1);
+        endValue.textContent = newEndTime.toFixed(1);
+    }
+
+    updateTimelineHandles();
+}
+
+startHandle.addEventListener('mousedown', () => {
+    draggingHandle = startHandle;
+});
+
+endHandle.addEventListener('mousedown', () => {
+    draggingHandle = endHandle;
+});
+
+timelineRange.addEventListener('mousedown', () => {
+    draggingHandle = timelineRange;
+});
+
+document.addEventListener('mousemove', handleDrag);
+document.addEventListener('mouseup', () => {
+    draggingHandle = null;
+});
 
 function discardMedia() {
     const mediaInput = document.getElementById('mediaInput');
@@ -243,6 +375,7 @@ function discardMedia() {
     const zoomSlider = document.getElementById('zoomSlider');
     const discardButton = document.getElementById('discardButton');
     const postStoriesButton = document.getElementById('postStoriesButton');
+    const dynamicTimeLabel =document.getElementById('dynamicTimeLabel');
 
     mediaInput.value = '';
     mediaPreview.innerHTML = '';
@@ -254,19 +387,12 @@ function discardMedia() {
     discardButton.style.display = 'none';
     postStoriesButton.style.display = 'none';
     document.querySelector('.file-attachment').style.display = 'block';
+    dynamicTimeLabel.style.display = 'none'; // Hide the dynamic time label
 }
 window.discardMedia = discardMedia;
 
 function closemediaInput() {
     document.querySelector('.file-attachment').style.display = 'none';
-}
-
-function cropMedia() {
-    alert('Crop functionality is not implemented yet.');
-}
-
-function adjustDuration() {
-    alert('Adjust duration functionality is not implemented yet.');
 }
 
 function confirmPostStories() {
@@ -284,6 +410,7 @@ function openAddStoryContainer() {
     document.getElementById('mediaPreview').innerHTML = '';
     document.getElementById('storyTitle').style.display = 'none';
     document.getElementById('mediaControls').style.display = 'none';
+    dynamicTimeLabel.style.display = 'none'; // Hide the dynamic time label
 }
 window.openAddStoryContainer = openAddStoryContainer;
 
