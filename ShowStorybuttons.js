@@ -1,3 +1,4 @@
+const storyViewer = document.getElementById('storyViewer');
 const storyViewerContent = document.getElementById('storyViewerContent');
 
 export function socialbutton() {
@@ -124,6 +125,7 @@ export function socialbutton() {
     // Add comment section
     const commentSection = document.createElement('div');
     commentSection.classList.add('comment-section');
+    commentSection.style.display = 'none'; // Initially hide the comment section
 
     const commentList = document.createElement('ul');
     commentList.classList.add('comment-list');
@@ -138,7 +140,7 @@ export function socialbutton() {
         if (commentText) {
             const commentItem = document.createElement('li');
             commentItem.classList.add('comment-item');
-            commentItem.textContent = commentText;
+            commentItem.innerHTML = '<i class="fa fa-user" aria-hidden="true"></i> ' + commentText;
             commentList.appendChild(commentItem);
             commentInput.value = '';
         }
@@ -156,13 +158,23 @@ export function socialbutton() {
 
     commentSection.appendChild(commentForm);
 
+    // Add close button to comment section
+    const closeCommentButton = document.createElement('button');
+    closeCommentButton.innerHTML = '<i class="fa fa-window-close" aria-hidden="true"></i>';
+    closeCommentButton.classList.add('close-comment-button');
+    closeCommentButton.addEventListener('click', () => {
+        commentSection.style.display = 'none';
+    });
+    commentSection.appendChild(closeCommentButton);
+
     // Add event listener to comment button to show comment section
     commentButton.addEventListener('click', () => {
         if (!storyViewerContent.contains(commentSection)) {
             storyViewerContent.appendChild(commentSection);
         }
-        commentSection.classList.toggle('active');
+        commentSection.style.display = commentSection.style.display === 'none' ? 'block' : 'none';
     });
 
     storyViewerContent.appendChild(socialButtons);
+    storyViewerContent.appendChild(commentSection); // Ensure comment section is appended to storyViewerContent
 }

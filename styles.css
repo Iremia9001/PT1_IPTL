@@ -678,8 +678,8 @@ body.dark-mode .dark-mode-toggle:hover {
 
 /* Comment Section Styling */
 .comment-section {
-    position: fixed;
-    bottom: -100%;
+    position: absolute;
+    bottom: 0;
     left: 0;
     width: 100%;
     background: white;
@@ -687,10 +687,13 @@ body.dark-mode .dark-mode-toggle:hover {
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
     transition: bottom 0.3s ease-in-out;
     z-index: 1000;
+    display: none; /* Initially hide the comment section */
+    max-height: 50%; /* Set maximum height */
+    overflow-y: auto; /* Enable vertical scrolling */
 }
 
 .comment-section.active {
-    bottom: 0;
+    display: block; /* Show the comment section when active */
 }
 
 .comment-list {
@@ -722,4 +725,21 @@ body.dark-mode .dark-mode-toggle:hover {
     color: white;
     border-radius: 20px;
     cursor: pointer;
+}
+
+/* Close Comment Button Styling */
+.close-comment-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    color: black;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+.close-comment-button:hover {
+    color: red;
 }
