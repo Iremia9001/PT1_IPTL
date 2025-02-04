@@ -15,6 +15,7 @@ const endValue = document.getElementById('endValue');
 const dynamicTimeLabel = document.getElementById('dynamicTimeLabel');
 const currentStartTimeValue = document.getElementById('currentStartTimeValue');
 const currentEndTimeValue = document.getElementById('currentEndTimeValue');
+const timelineContainer = document.getElementById('timelineContainer');
 
 let storyQueue = [];
 let storyTitles = [];
@@ -60,6 +61,7 @@ function addStories() {
             video.dataset.endTime = endValue.textContent;
             video.loading = 'lazy';
             video.controlsList = "nodownload nofullscreen noremoteplayback noplaybackrate novolume"; // Remove additional controls
+            video.disablePictureInPicture = true;
             storyElement.appendChild(video);
         } else {
             alert('Unsupported file type.');
@@ -123,6 +125,7 @@ function showStory(index) {
         mediaElement.style.transform = `scale(${story.scale})`;
         mediaElement.loading = 'lazy';
         storyViewerContent.appendChild(mediaElement);
+        timelineContainer.style.display = 'none'; // Hide timeline slider for images
         updateProgressBar(5000, () => showStory(currentStoryIndex + 1));
     } else if (story.type === 'video') {
         mediaElement = document.createElement('video');
@@ -131,7 +134,9 @@ function showStory(index) {
         mediaElement.style.transform = `scale(${story.scale})`;
         mediaElement.loading = 'lazy';
         mediaElement.controlsList = "nodownload nofullscreen noremoteplayback noplaybackrate novolume"; // Remove additional controls
+        mediaElement.disablePictureInPicture = true;
         storyViewerContent.appendChild(mediaElement);
+        timelineContainer.style.display = 'block'; // Show timeline slider for videos
 
         mediaElement.onloadedmetadata = () => {
             videoDuration = mediaElement.duration;
@@ -233,12 +238,15 @@ function previewMedia() {
             mediaElement = document.createElement('img');
             mediaElement.src = url;
             mediaElement.loading = 'lazy';
+            timelineContainer.style.display = 'none'; // Hide timeline slider for images
         } else if (file.type.startsWith('video/')) {
             mediaElement = document.createElement('video');
             mediaElement.src = url;
             mediaElement.controls = true;
             mediaElement.controlsList = "nodownload nofullscreen noremoteplayback noplaybackrate novolume"; // Remove additional controls
+            mediaElement.disablePictureInPicture = true;
             mediaElement.loading = 'lazy';
+            timelineContainer.style.display = 'block'; // Show timeline slider for videos
             mediaElement.onloadedmetadata = () => {
                 videoDuration = mediaElement.duration;
                 updateTimelineHandles();
@@ -282,7 +290,6 @@ function previewMedia() {
 window.previewMedia = previewMedia;
 
 function updateTimelineHandles() {
-    const timelineContainer = document.getElementById('timelineContainer');
     const containerWidth = timelineContainer.offsetWidth;
     const startPercent = parseFloat(startValue.textContent) / videoDuration * 100;
     const endPercent = parseFloat(endValue.textContent) / videoDuration * 100;
@@ -311,7 +318,6 @@ function updateTimelineHandles() {
 function handleDrag(event) {
     if (!draggingHandle) return;
 
-    const timelineContainer = document.getElementById('timelineContainer');
     const containerWidth = timelineContainer.offsetWidth;
     const rect = timelineContainer.getBoundingClientRect();
     const offsetX = event.clientX - rect.left;
