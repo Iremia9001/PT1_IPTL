@@ -242,7 +242,7 @@ function previewMedia() {
         } else if (file.type.startsWith('video/')) {
             mediaElement = document.createElement('video');
             mediaElement.src = url;
-            mediaElement.controls = true;
+            mediaElement.controls = false;
             mediaElement.controlsList = "nodownload nofullscreen noremoteplayback noplaybackrate novolume"; // Remove additional controls
             mediaElement.disablePictureInPicture = true;
             mediaElement.loading = 'lazy';
@@ -388,6 +388,7 @@ function discardMedia() {
     postStoriesButton.style.display = 'none';
     document.querySelector('.file-attachment').style.display = 'block';
     dynamicTimeLabel.style.display = 'none'; // Hide the dynamic time label
+    resetZoomSlider(); // Reset zoom slider
 }
 window.discardMedia = discardMedia;
 
@@ -396,12 +397,40 @@ function closemediaInput() {
 }
 
 function confirmPostStories() {
-    if (confirm('Are you sure you want to post these stories?')) {
-        addStories();
-        closeAddStoryContainer();
-    }
+    showConfirmationBox();
 }
 window.confirmPostStories = confirmPostStories;
+
+function showConfirmationBox() {
+    const confirmationBox = document.createElement('div');
+    confirmationBox.classList.add('confirmation-box');
+
+    const confirmationMessage = document.createElement('p');
+    confirmationMessage.textContent = 'Are you sure you want to post this story?';
+    confirmationBox.appendChild(confirmationMessage);
+
+    const confirmationButtons = document.createElement('div');
+    confirmationButtons.classList.add('confirmation-buttons');
+
+    const confirmButton = document.createElement('button');
+    confirmButton.textContent = 'Yes';
+    confirmButton.addEventListener('click', () => {
+        addStories();
+        closeAddStoryContainer();
+        document.body.removeChild(confirmationBox);
+    });
+    confirmationButtons.appendChild(confirmButton);
+
+    const cancelButton = document.createElement('button');
+    cancelButton.textContent = 'No';
+    cancelButton.addEventListener('click', () => {
+        document.body.removeChild(confirmationBox);
+    });
+    confirmationButtons.appendChild(cancelButton);
+
+    confirmationBox.appendChild(confirmationButtons);
+    document.body.appendChild(confirmationBox);
+}
 
 function openAddStoryContainer() {
     document.getElementById('addStoryContainer').style.display = 'block';
@@ -411,6 +440,7 @@ function openAddStoryContainer() {
     document.getElementById('storyTitle').style.display = 'none';
     document.getElementById('mediaControls').style.display = 'none';
     dynamicTimeLabel.style.display = 'none'; // Hide the dynamic time label
+    resetZoomSlider(); // Reset zoom slider
 }
 window.openAddStoryContainer = openAddStoryContainer;
 
@@ -419,6 +449,12 @@ function closeAddStoryContainer() {
     document.getElementById('addStoryContainer').style.display = 'none';
 }
 window.closeAddStoryContainer = closeAddStoryContainer;
+
+function resetZoomSlider() {
+    const zoomSlider = document.getElementById('zoomSlider');
+    zoomSlider.value = 1; // Reset to center value
+    zoomMedia(); // Apply the reset value
+}
 
 document.getElementById('darkModeToggle').addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
