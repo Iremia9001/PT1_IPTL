@@ -46,9 +46,17 @@
         <div id="mediaPreview" class="media-preview" style="display: none;"></div>
         <input type="range" id="zoomSlider" min="0.5" max="2" step="0.1" value="1" style="display: none;" oninput="zoomMedia()">
         <div id="mediaControls" class="media-controls" style="display: none;">
-            <button onclick="cropMedia()">Crop</button>
-            <button onclick="adjustDuration()">Adjust Duration</button>
+            <div class="timeline-container" id="timelineContainer">
+                <div class="timeline-range" id="timelineRange"></div>
+                <div class="timeline-handle" id="startHandle"></div>
+                <div class="timeline-handle" id="endHandle"></div>
+            </div>
+            <div class="slider-container">
+                <label id="startSliderLabel">Start Time: <span id="startValue">0</span> seconds</label>
+                <label id="endSliderLabel">End Time: <span id="endValue">15</span> seconds</label>
+            </div>
         </div>
+        <label id="dynamicTimeLabel" style="display: none;">Current Time: Start: <span id="currentStartTimeValue">0</span> seconds, End: <span id="currentEndTimeValue">15</span> seconds</label>
         <div class="action-buttons">
             <button id="postStoriesButton" style="display: none;" onclick="confirmPostStories()">Post Stories</button>
             <button onclick="closeAddStoryContainer(); discardMedia()">Cancel</button>

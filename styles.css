@@ -176,7 +176,7 @@ body.dark-mode .story.add-story {
     text-align: center; /* Center the text */
 }
 
-#zoomSlider {
+#zoomSlider, #durationSlider, #startSlider, #endSlider {
     width: 80%;
     margin: 10px auto;
     -webkit-appearance: none; /* Remove default styling */
@@ -187,7 +187,7 @@ body.dark-mode .story.add-story {
     outline: none; /* Remove outline */
 }
 
-#zoomSlider::-webkit-slider-thumb {
+#zoomSlider::-webkit-slider-thumb, #durationSlider::-webkit-slider-thumb, #startSlider::-webkit-slider-thumb, #endSlider::-webkit-slider-thumb {
     -webkit-appearance: none; /* Remove default styling */
     appearance: none; /* Remove default styling */
     width: 20px; /* Thumb width */
@@ -198,7 +198,7 @@ body.dark-mode .story.add-story {
     margin-top: -7.5px; /* Center the thumb vertically */
 }
 
-#zoomSlider::-moz-range-thumb {
+#zoomSlider::-moz-range-thumb, #durationSlider::-moz-range-thumb, #startSlider::-moz-range-thumb, #endSlider::-moz-range-thumb {
     width: 20px; /* Thumb width */
     height: 20px; /* Thumb height */
     background: #1877f2; /* Thumb color */
@@ -207,7 +207,7 @@ body.dark-mode .story.add-story {
     margin-top: -7.5px; /* Center the thumb vertically */
 }
 
-#zoomSlider::-webkit-slider-runnable-track {
+#zoomSlider::-webkit-slider-runnable-track, #durationSlider::-webkit-slider-runnable-track, #startSlider::-webkit-slider-runnable-track, #endSlider::-webkit-slider-runnable-track {
     width: 100%;
     height: 5px;
     cursor: pointer;
@@ -215,12 +215,25 @@ body.dark-mode .story.add-story {
     border-radius: 5px;
 }
 
-#zoomSlider::-moz-range-track {
+#zoomSlider::-moz-range-track, #durationSlider::-moz-range-track, #startSlider::-moz-range-track, #endSlider::-moz-range-track {
     width: 100%;
     height: 5px;
     cursor: pointer;
     background: #ddd;
     border-radius: 5px;
+}
+
+/* Add a label for the duration slider */
+#durationSliderLabel, #startSliderLabel, #endSliderLabel {
+    display: none;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+body.dark-mode #durationSliderLabel, body.dark-mode #startSliderLabel, body.dark-mode #endSliderLabel {
+    color: #e0e0e0;
 }
 
 .file-upload-container {
@@ -675,3 +688,57 @@ body.dark-mode .dark-mode-toggle:hover {
     50% { transform: scale(1.2); }
     100% { transform: scale(1); }
 }
+
+/* Slider Tooltip Styling */
+.slider-tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    transform: translate(-50%, -150%);
+    display: none;
+}
+
+.slider-container {
+    position: relative;
+}
+
+/* ...existing code... */
+
+.timeline-container {
+    position: relative;
+    width: 80%;
+    height: 10px;
+    background-color: #ddd;
+    margin: 20px auto;
+    border-radius: 5px;
+}
+
+.timeline-handle {
+    position: absolute;
+    width: 10px;
+    height: 20px;
+    background-color: #1877f2;
+    border-radius: 5px;
+    cursor: pointer;
+    top: -5px;
+}
+
+.timeline-range {
+    position: absolute;
+    height: 100%;
+    background-color: #1877f2;
+    border-radius: 5px;
+}
+
+/* ...existing code... */
+
+video::-webkit-media-controls-volume-slider,
+video::-webkit-media-controls-mute-button {
+    display: none !important;
+}
+
+/* ...existing code... */
