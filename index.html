@@ -37,7 +37,7 @@
     <div class="add-story-container" id="addStoryContainer">
         <div class="file-upload-container">
             <label for="mediaInput" class="file-attachment">
-                <img src="gallery.png" alt="Gallery Icon" loading="lazy">
+                <img src="Media\gallery.png" alt="Gallery Icon" loading="lazy">
             </label>
             <input type="file" id="mediaInput" accept="image/*,video/*" multiple style="display: none;" onchange="previewMedia()">
         </div>
@@ -56,9 +56,9 @@
                 <label id="endSliderLabel">End Time: <span id="endValue">15</span> seconds</label>
             </div>
         </div>
-        <label id="dynamicTimeLabel" style="display: none;">Current Time: Start: <span id="currentStartTimeValue">0</span> seconds, End: <span id="currentEndTimeValue">15</span> seconds</label>
+        <label id="dynamicTimeLabel" style="display: none;"><span id="currentStartTimeValue">0</span> / <span id="currentEndTimeValue">15</span></label>
         <div class="action-buttons">
-            <button id="postStoriesButton" style="display: none;" onclick="confirmPostStories()">Post Stories</button>
+            <button id="postStoriesButton" style="display: none;" onclick="confirmPostStories()">Post Story</button>
             <button onclick="closeAddStoryContainer(); discardMedia()">Cancel</button>
         </div>
     </div>

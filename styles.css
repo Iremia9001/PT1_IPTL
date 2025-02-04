@@ -742,3 +742,58 @@ video::-webkit-media-controls-mute-button {
 }
 
 /* ...existing code... */
+
+.confirmation-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1001;
+    text-align: center;
+    width: 80%;
+    max-width: 400px;
+}
+
+.confirmation-box p {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+
+.confirmation-buttons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.confirmation-buttons button {
+    padding: 10px 20px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.confirmation-buttons button:hover {
+    background-color: #1558b0;
+}
+
+/* Dark mode styles */
+body.dark-mode .confirmation-box {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+body.dark-mode .confirmation-buttons button {
+    background-color: #555;
+}
+
+body.dark-mode .confirmation-buttons button:hover {
+    background-color: #333;
+}
+
+/* ...existing code... */
