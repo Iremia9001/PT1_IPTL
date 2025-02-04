@@ -18,25 +18,38 @@ function addStories() {
     const storyTitle = storyTitleInput.value.trim();
     const zoomSlider = document.getElementById('zoomSlider');
     const scale = zoomSlider.value;
-    const mediaPreview = document.getElementById('mediaPreview');
-    const croppedVideo = mediaPreview.querySelector('video');
 
-    if (files.length === 0 && !croppedVideo) {
+    if (files.length === 0) {
         alert('Please select at least one image or video.');
         return;
     }
 
-    if (croppedVideo) {
+    files.forEach((file, index) => {
         const storyElement = document.createElement('div');
         storyElement.classList.add('story');
 
-        const url = croppedVideo.src; // Use the cropped video URL
+        const url = URL.createObjectURL(file);
         const title = storyTitle || `Untitled Story`; // Default title if none provided
 
-        croppedVideo.style.transform = `scale(${scale})`;
-        croppedVideo.dataset.scale = scale;
-        croppedVideo.loading = 'lazy';
-        storyElement.appendChild(croppedVideo.cloneNode(true));
+        if (file.type.startsWith("image/")) {
+            const img = document.createElement('img');
+            img.src = url;
+            img.style.transform = `scale(${scale})`;
+            img.dataset.scale = scale;
+            img.loading = 'lazy';
+            storyElement.appendChild(img);
+        } else if (file.type.startsWith("video/")) {
+            const video = document.createElement('video');
+            video.src = url;
+            video.controls = false;
+            video.style.transform = `scale(${scale})`;
+            video.dataset.scale = scale;
+            video.loading = 'lazy';
+            storyElement.appendChild(video);
+        } else {
+            alert('Unsupported file type.');
+            return;
+        }
 
         storyTitles.push(title); // Store the title in the array
 
@@ -55,59 +68,11 @@ function addStories() {
         });
 
         storiesContainer.appendChild(storyElement);
-    } else {
-        files.forEach((file, index) => {
-            const storyElement = document.createElement('div');
-            storyElement.classList.add('story');
-
-            const url = URL.createObjectURL(file);
-            const title = storyTitle || `Untitled Story`; // Default title if none provided
-
-            if (file.type.startsWith("image/")) {
-                const img = document.createElement('img');
-                img.src = url;
-                img.style.transform = `scale(${scale})`;
-                img.dataset.scale = scale;
-                img.loading = 'lazy';
-                storyElement.appendChild(img);
-            } else if (file.type.startsWith("video/")) {
-                const video = document.createElement('video');
-                video.src = url;
-                video.controls = false;
-                video.style.transform = `scale(${scale})`;
-                video.dataset.scale = scale;
-                video.loading = 'lazy';
-                storyElement.appendChild(video);
-            } else {
-                alert('Unsupported file type.');
-                return;
-            }
-
-            storyTitles.push(title); // Store the title in the array
-
-            storyElement.addEventListener('click', () => {
-                storyQueue = Array.from(storiesContainer.children)
-                    .filter(child => child !== storiesContainer.children[0])
-                    .map((child, idx) => ({
-                        src: child.querySelector('img, video').src,
-                        type: child.querySelector('img') ? 'image' : 'video',
-                        title: storyTitles[idx], // Retrieve the title from the array
-                        scale: child.querySelector('img, video').dataset.scale
-                    }));
-
-                currentStoryIndex = storyQueue.findIndex(item => item.src === url);
-                showStory(currentStoryIndex);
-            });
-
-            storiesContainer.appendChild(storyElement);
-        });
-    }
+    });
 
     storyTitleInput.value = '';
     mediaInput.value = '';
-    mediaPreview.innerHTML = '';
 }
-//tode : add adio to the story
 window.addStories = addStories;
 
 function showStory(index) {
@@ -232,8 +197,6 @@ function previewMedia() {
     const postStoriesButton = document.getElementById('postStoriesButton');
     mediaPreview.innerHTML = '';
 
-    let hasVideo = false;
-
     Array.from(mediaInput.files).forEach(file => {
         const url = URL.createObjectURL(file);
         let mediaElement;
@@ -247,7 +210,6 @@ function previewMedia() {
             mediaElement.src = url;
             mediaElement.controls = true;
             mediaElement.loading = 'lazy';
-            hasVideo = true;
         }
 
         mediaPreview.appendChild(mediaElement);
@@ -261,18 +223,6 @@ function previewMedia() {
         discardButton.style.display = 'block';
         postStoriesButton.style.display = 'block';
         closemediaInput();
-
-        const cropButton = mediaControls.querySelector('button');
-        const adjustDurationButton = mediaControls.querySelector('button[onclick="adjustDuration()"]');
-
-        if (hasVideo) {
-            if (cropButton) cropButton.style.display = 'inline-block';
-            if (adjustDurationButton) adjustDurationButton.style.display = 'inline-block';
-        } else {
-            if (cropButton) cropButton.style.display = 'none';
-            if (adjustDurationButton) adjustDurationButton.style.display = 'none';
-        }
-
     } else {
         storyTitleInput.style.display = 'none';
         mediaControls.style.display = 'none';
@@ -312,99 +262,20 @@ function closemediaInput() {
 }
 
 function cropMedia() {
-    const mediaPreview = document.getElementById('mediaPreview');
-    const video = mediaPreview.querySelector('video');
-    if (!video) {
-        alert('No video to crop.');
-        return;
-    }
-
-    // Clear previous crop inputs and buttons
-    const mediaControls = document.getElementById('mediaControls');
-    mediaControls.innerHTML = '';
-
-    const cropStartInput = document.createElement('input');
-    cropStartInput.type = 'number';
-    cropStartInput.placeholder = 'Start (seconds)';
-    cropStartInput.min = 0;
-    cropStartInput.max = video.duration;
-    cropStartInput.step = 0.1;
-
-    const cropEndInput = document.createElement('input');
-    cropEndInput.type = 'number';
-    cropEndInput.placeholder = 'End (seconds)';
-    cropEndInput.min = 0;
-    cropEndInput.max = video.duration;
-    cropEndInput.step = 0.1;
-
-    const cropButton = document.createElement('button');
-    cropButton.textContent = 'Crop';
-    cropButton.addEventListener('click', () => {
-        const start = parseFloat(cropStartInput.value);
-        const end = parseFloat(cropEndInput.value);
-
-        if (isNaN(start) || isNaN(end) || start >= end || start < 0 || end > video.duration) {
-            alert('Invalid crop range.');
-            return;
-        }
-
-        const croppedVideo = document.createElement('video');
-        croppedVideo.controls = true;
-        croppedVideo.autoplay = true;
-
-        const stream = video.captureStream();
-        const mediaRecorder = new MediaRecorder(stream);
-        const chunks = [];
-
-        mediaRecorder.ondataavailable = (e) => {
-            chunks.push(e.data);
-        };
-
-        mediaRecorder.onstop = () => {
-            const blob = new Blob(chunks, { type: 'video/mp4' });
-            const url = URL.createObjectURL(blob);
-            croppedVideo.src = url;
-
-            // Clear previous cropped video
-            mediaPreview.innerHTML = '';
-            mediaPreview.appendChild(croppedVideo);
-            croppedVideo.play(); // Ensure the cropped video starts playing
-        };
-
-        // Reset the state before starting a new crop operation
-        mediaPreview.innerHTML = '';
-        video.currentTime = start;
-        video.play();
-
-        setTimeout(() => {
-            video.pause();
-            mediaRecorder.stop();
-        }, (end - start) * 1000);
-        
-
-        mediaRecorder.start();
-    });
-
-    mediaControls.appendChild(cropStartInput);
-    mediaControls.appendChild(cropEndInput);
-    mediaControls.appendChild(cropButton);
-    
+    alert('Crop functionality is not implemented yet.');
 }
-window.cropMedia = cropMedia;
 
 function adjustDuration() {
     alert('Adjust duration functionality is not implemented yet.');
 }
+
 function confirmPostStories() {
     if (confirm('Are you sure you want to post these stories?')) {
         addStories();
         closeAddStoryContainer();
-        resetCropMedia();
     }
 }
 window.confirmPostStories = confirmPostStories;
-
-
 
 function openAddStoryContainer() {
     document.getElementById('addStoryContainer').style.display = 'block';
