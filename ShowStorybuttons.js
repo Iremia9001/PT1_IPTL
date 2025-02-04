@@ -120,4 +120,49 @@ export function socialbutton() {
         reactionsContainer.style.visibility = 'hidden';
         reactionsContainer.style.opacity = '0';
     });
+
+    // Add comment section
+    const commentSection = document.createElement('div');
+    commentSection.classList.add('comment-section');
+
+    const commentList = document.createElement('ul');
+    commentList.classList.add('comment-list');
+    commentSection.appendChild(commentList);
+
+    const commentForm = document.createElement('form');
+    commentForm.classList.add('comment-form');
+    commentForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const commentInput = commentForm.querySelector('input');
+        const commentText = commentInput.value.trim();
+        if (commentText) {
+            const commentItem = document.createElement('li');
+            commentItem.classList.add('comment-item');
+            commentItem.textContent = commentText;
+            commentList.appendChild(commentItem);
+            commentInput.value = '';
+        }
+    });
+
+    const commentInput = document.createElement('input');
+    commentInput.type = 'text';
+    commentInput.placeholder = 'Add a comment...';
+    commentForm.appendChild(commentInput);
+
+    const commentSubmitButton = document.createElement('button');
+    commentSubmitButton.type = 'submit';
+    commentSubmitButton.textContent = 'Post';
+    commentForm.appendChild(commentSubmitButton);
+
+    commentSection.appendChild(commentForm);
+
+    // Add event listener to comment button to show comment section
+    commentButton.addEventListener('click', () => {
+        if (!storyViewerContent.contains(commentSection)) {
+            storyViewerContent.appendChild(commentSection);
+        }
+        commentSection.classList.toggle('active');
+    });
+
+    storyViewerContent.appendChild(socialButtons);
 }
