@@ -387,6 +387,7 @@ function discardMedia() {
     document.querySelector('.file-attachment').style.display = 'block';
     dynamicTimeLabel.style.display = 'none'; // Hide the dynamic time label
     resetZoomSlider(); // Reset zoom slider
+    resetTimelineSlider(); // Reset timeline slider
 }
 window.discardMedia = discardMedia;
 
@@ -409,6 +410,7 @@ window.openAddStoryContainer = openAddStoryContainer;
 function closeAddStoryContainer() {
     discardMedia();
     document.getElementById('addStoryContainer').style.display = 'none';
+    resetTimelineSlider(); // Reset timeline slider
 }
 window.closeAddStoryContainer = closeAddStoryContainer;
 
@@ -416,6 +418,12 @@ function resetZoomSlider() {
     const zoomSlider = document.getElementById('zoomSlider');
     zoomSlider.value = 1; // Reset to center value
     zoomMedia(); // Apply the reset value
+}
+
+function resetTimelineSlider() {
+    startValue.textContent = '0';
+    endValue.textContent = Math.min(videoDuration, 15).toFixed(1);
+    updateTimelineHandles();
 }
 
 
