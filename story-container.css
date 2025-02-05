@@ -1,0 +1,228 @@
+.stories-container {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 20px;
+}
+
+.story {
+    width: 120px;
+    height: 213px; /* 9:16 aspect ratio */
+    margin-right: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.story:hover {
+    transform: scale(1.05);
+}
+
+.story img, .story video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.story .add-story {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1877f2;
+    color: #fff;
+    font-size: 4rem; /* Enlarge the + */
+    font-weight: bold;
+    border-radius: 10px;
+    width: 120px;
+    height: 213px; /* 9:16 aspect ratio */
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.story.add-story {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa; /* Slightly different from carousel background */
+    color: #000; /* Black + in light mode */
+    font-size: 4rem; /* Enlarge the + */
+    font-weight: bold;
+    border-radius: 10px;
+    width: 120px;
+    height: 213px; /* 9:16 aspect ratio */
+    cursor: pointer;
+    transition: transform 0.3s;
+    position: relative;
+}
+
+.story.add-story::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    z-index: 1;
+}
+
+.add-story-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.add-story-container input,
+.add-story-container input[type="text"] {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: calc(100% - 22px);
+    border: none; /* Remove border */
+    text-align: center; /* Center the text */
+}
+
+.media-preview {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #ccc; /* Make container size visible */
+    width: 100%; /* Fit inside add story container */
+    max-width: 300px; /* Adjusted width to fit on screen */
+    height: 533px; /* Adjusted height to maintain 9:16 aspect ratio */
+    position: relative;
+    margin: 0 auto; /* Center the container */
+    overflow: hidden; /* Ensure media is cut off if it exceeds the preview border */
+}
+
+.media-preview img,
+.media-preview video {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 5px;
+    transition: transform 0.3s; /* Smooth zoom transition */
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.media-controls {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.media-controls button {
+    padding: 5px 10px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.media-controls button:hover {
+    background-color: #1558b0;
+}
+
+.add-story-container button {
+    padding: 10px 20px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.add-story-container button:hover {
+    background-color: #1558b0;
+}
+
+.action-buttons {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.action-buttons button {
+    padding: 5px 10px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.action-buttons button:hover {
+    background-color: #1558b0;
+}
+
+.story-viewer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.story-viewer.active {
+    display: flex;
+}
+
+.story-viewer-title {
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.story-viewer-content {
+    width: 360px; /* Fixed width */
+    height: 640px; /* Fixed height to maintain 9:16 aspect ratio */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: rgba(255, 255, 255, 1); /* Make the container opaque */
+    border-radius: 10px;
+    overflow: hidden; /* Ensure content is cut off if it exceeds the container */
+}
+
+.story-viewer img,
+.story-viewer video {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s; /* Smooth zoom transition */
+}

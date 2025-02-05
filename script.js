@@ -8,8 +8,6 @@ const progressBar = document.getElementById('progressBar');
 const startHandle = document.getElementById('startHandle');
 const endHandle = document.getElementById('endHandle');
 const timelineRange = document.getElementById('timelineRange');
-const startSliderLabel = document.getElementById('startSliderLabel');
-const endSliderLabel = document.getElementById('endSliderLabel');
 const startValue = document.getElementById('startValue');
 const endValue = document.getElementById('endValue');
 const dynamicTimeLabel = document.getElementById('dynamicTimeLabel');
@@ -396,42 +394,6 @@ function closemediaInput() {
     document.querySelector('.file-attachment').style.display = 'none';
 }
 
-function confirmPostStories() {
-    showConfirmationBox();
-}
-window.confirmPostStories = confirmPostStories;
-
-function showConfirmationBox() {
-    const confirmationBox = document.createElement('div');
-    confirmationBox.classList.add('confirmation-box');
-
-    const confirmationMessage = document.createElement('p');
-    confirmationMessage.textContent = 'Are you sure you want to post this story?';
-    confirmationBox.appendChild(confirmationMessage);
-
-    const confirmationButtons = document.createElement('div');
-    confirmationButtons.classList.add('confirmation-buttons');
-
-    const confirmButton = document.createElement('button');
-    confirmButton.textContent = 'Yes';
-    confirmButton.addEventListener('click', () => {
-        addStories();
-        closeAddStoryContainer();
-        document.body.removeChild(confirmationBox);
-    });
-    confirmationButtons.appendChild(confirmButton);
-
-    const cancelButton = document.createElement('button');
-    cancelButton.textContent = 'No';
-    cancelButton.addEventListener('click', () => {
-        document.body.removeChild(confirmationBox);
-    });
-    confirmationButtons.appendChild(cancelButton);
-
-    confirmationBox.appendChild(confirmationButtons);
-    document.body.appendChild(confirmationBox);
-}
-
 function openAddStoryContainer() {
     document.getElementById('addStoryContainer').style.display = 'block';
     document.getElementById('mediaInput').value = '';
@@ -456,21 +418,4 @@ function resetZoomSlider() {
     zoomMedia(); // Apply the reset value
 }
 
-document.getElementById('darkModeToggle').addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    document.querySelector('header').classList.toggle('dark-mode');
-    document.querySelector('footer').classList.toggle('dark-mode');
-    document.querySelector('.stories-container').classList.toggle('dark-mode');
-    document.querySelector('.upload-container').classList.toggle('dark-mode');
-    document.querySelector('.story-viewer').classList.toggle('dark-mode');
-    document.querySelector('.story-viewer-content').classList.toggle('dark-mode');
-    document.querySelector('.add-story-container').classList.toggle('dark-mode');
-    document.querySelector('.upload-container input[type="text"]').classList.toggle('dark-mode');
 
-    const darkModeButton = document.getElementById('darkModeToggle');
-    if (document.body.classList.contains('dark-mode')) {
-        darkModeButton.textContent = 'Light Mode';
-    } else {
-        darkModeButton.textContent = 'Dark Mode';
-    }
-});

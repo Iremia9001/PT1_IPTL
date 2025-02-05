@@ -6,21 +6,11 @@ body {
     background-color: #f0f2f5;
 }
 
-body.dark-mode {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-
 header, footer {
     background-color: #333;
     color: white;
     padding: 15px 0;
     text-align: center;
-}
-
-header.dark-mode, footer.dark-mode {
-    background-color: #1e1e1e;
-    color: #e0e0e0;
 }
 
 header .logo h1 {
@@ -62,118 +52,6 @@ header .nav a {
 
 header .nav a:hover {
     text-decoration: underline;
-}
-
-/* Stories Container */
-.stories-container {
-    display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 100%;
-    padding: 10px;
-    border-radius: 10px;
-    margin: 20px;
-}
-
-.stories-container.dark-mode {
-    background-color: #1e1e1e;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-}
-
-.story {
-    width: 120px;
-    height: 213px; /* 9:16 aspect ratio */
-    margin-right: 10px;
-    border-radius: 10px;
-    overflow: hidden;
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.3s;
-}
-
-.story:hover {
-    transform: scale(1.05);
-}
-
-.story img, .story video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.story .add-story {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #1877f2;
-    color: #fff;
-    font-size: 4rem; /* Enlarge the + */
-    font-weight: bold;
-    border-radius: 10px;
-    width: 120px;
-    height: 213px; /* 9:16 aspect ratio */
-    cursor: pointer;
-    transition: transform 0.3s;
-}
-
-.story.add-story {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f8f9fa; /* Slightly different from carousel background */
-    color: #000; /* Black + in light mode */
-    font-size: 4rem; /* Enlarge the + */
-    font-weight: bold;
-    border-radius: 10px;
-    width: 120px;
-    height: 213px; /* 9:16 aspect ratio */
-    cursor: pointer;
-    transition: transform 0.3s;
-    position: relative;
-}
-
-body.dark-mode .story.add-story {
-    background-color: #000; /* Black background in dark mode */
-    color: #fff; /* White + in dark mode */
-}
-
-.story.add-story::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    z-index: 1;
-}
-
-.add-story-container {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    width: 80%;
-    max-width: 500px;
-    text-align: center;
-}
-
-.add-story-container input,
-.add-story-container input[type="text"] {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
-    width: calc(100% - 22px);
-    border: none; /* Remove border */
-    text-align: center; /* Center the text */
 }
 
 #zoomSlider, #durationSlider, #startSlider, #endSlider {
@@ -232,10 +110,6 @@ body.dark-mode .story.add-story {
     color: #333;
 }
 
-body.dark-mode #durationSliderLabel, body.dark-mode #startSliderLabel, body.dark-mode #endSliderLabel {
-    color: #e0e0e0;
-}
-
 .file-upload-container {
     display: flex;
     justify-content: center;
@@ -268,14 +142,6 @@ body.dark-mode #durationSliderLabel, body.dark-mode #startSliderLabel, body.dark
 
 .file-attachment:hover {
     background-color: #e0e0e0;
-}
-
-body.dark-mode .file-attachment {
-    background-color: #333;
-}
-
-body.dark-mode .file-attachment:hover {
-    background-color: #444;
 }
 
 .media-preview {
@@ -362,202 +228,6 @@ body.dark-mode .file-attachment:hover {
     background-color: #1558b0;
 }
 
-/* Dark mode styles */
-body.dark-mode .add-story-container {
-    background-color: #1e1e1e;
-    color: #e0e0e0;
-}
-
-body.dark-mode .add-story-container input,
-body.dark-mode .add-story-container input[type="text"] {
-    background-color: #333;
-    color: #e0e0e0;
-    border: none;
-}
-
-body.dark-mode .add-story-container input::placeholder,
-body.dark-mode .add-story-container input[type="text"]::placeholder {
-    color: #aaa;
-}
-
-body.dark-mode .media-preview {
-    border-color: #555;
-}
-
-body.dark-mode .media-controls button {
-    background-color: #555;
-}
-
-body.dark-mode .media-controls button:hover {
-    background-color: #333;
-}
-
-body.dark-mode .action-buttons button {
-    background-color: #555;
-}
-
-body.dark-mode .action-buttons button:hover {
-    background-color: #333;
-}
-
-/* Upload Container */
-.upload-container {
-    padding: 20px;
-    background-color: #fff;
-    margin: 20px auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    width: 80%;
-    max-width: 400px;
-    text-align: center;
-}
-
-.upload-container.dark-mode {
-    background-color: #1e1e1e;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-}
-
-.upload-container input,
-.upload-container input[type="text"] {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
-    width: calc(100% - 22px);
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-body.dark-mode .upload-container input,
-body.dark-mode .upload-container input[type="text"] {
-    background-color: #333;
-    color: #e0e0e0;
-    border: 1px solid #555;
-}
-
-body.dark-mode .upload-container input::placeholder,
-body.dark-mode .upload-container input[type="text"]::placeholder {
-    color: #aaa; /* Match the color of "No file chosen" text */
-}
-
-.upload-container input[type="file"] {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
-    width: calc(100% - 22px);
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #fff;
-    color: #000;
-    cursor: pointer;
-}
-
-.upload-container input[type="file"]:hover {
-    background-color: #e0e0e0;
-}
-
-body.dark-mode .upload-container input[type="file"] {
-    background-color: #333;
-    color: #e0e0e0;
-    border: 1px solid #555;
-    caret-color: #e0e0e0; /* Adjust caret color for dark mode */
-}
-
-body.dark-mode .upload-container input[type="file"]:hover {
-    background-color: #444;
-}
-
-body.dark-mode .upload-container input[type="file"]::-webkit-file-upload-button {
-    background-color: #555;
-    color: #e0e0e0;
-    border: 1px solid #555;
-}
-
-body.dark-mode .upload-container input[type="file"]::-webkit-file-upload-button:hover {
-    background-color: #666;
-}
-
-body.dark-mode .upload-container input[type="file"]::-moz-file-upload-button {
-    background-color: #555;
-    color: #e0e0e0;
-    border: 1px solid #555;
-}
-
-body.dark-mode .upload-container input[type="file"]::-moz-file-upload-button:hover {
-    background-color: #666;
-}
-
-.upload-container button {
-    padding: 10px 20px;
-    background-color: #1877f2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 10px;
-}
-
-.upload-container button:hover {
-    background-color: #1558b0;
-}
-
-.upload-container h2 {
-    text-align: center;
-}
-
-/* Story Viewer Styling */
-.story-viewer {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-.story-viewer.active {
-    display: flex;
-}
-
-.story-viewer.dark-mode {
-    background-color: rgba(0, 0, 0, 0.9);
-}
-
-.story-viewer-title {
-    color: #fff;
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-    text-align: center;
-}
-
-.story-viewer-content {
-    width: 360px; /* Fixed width */
-    height: 640px; /* Fixed height to maintain 9:16 aspect ratio */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    background-color: rgba(255, 255, 255, 1); /* Make the container opaque */
-    border-radius: 10px;
-    overflow: hidden; /* Ensure content is cut off if it exceeds the container */
-}
-
-.story-viewer-content.dark-mode {
-    background-color: rgba(30, 30, 30, 1); /* Dark mode background for story viewer content */
-}
-
-.story-viewer img,
-.story-viewer video {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    transition: transform 0.3s; /* Smooth zoom transition */
-}
-
 /* Close Button Styling */
 .close-button {
     position: fixed; /* Change to fixed positioning */
@@ -605,32 +275,7 @@ body.dark-mode .upload-container input[type="file"]::-moz-file-upload-button:hov
     border-top: 1px solid #444;
 }
 
-.dark-mode-toggle {
-    background-color: #1877f2;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-    position: absolute;
-    left: 5%;
-}
-
-.dark-mode-toggle:hover {
-    background-color: #1558b0;
-}
-
-body.dark-mode .dark-mode-toggle {
-    background-color: #555;
-    color: #fff;
-}
-
-body.dark-mode .dark-mode-toggle:hover {
-    background-color: #333;
-}
-
-.social-buttons{
+.social-buttons {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -638,7 +283,7 @@ body.dark-mode .dark-mode-toggle:hover {
     padding-bottom: 20px;
 }
 
-.list-of-buttons{
+.list-of-buttons {
     height: 100%;
     list-style-type: none;
     padding: 0;
@@ -650,43 +295,8 @@ body.dark-mode .dark-mode-toggle:hover {
 }
 
 /*button styling*/
-.list-of-buttons li{
-    
+.list-of-buttons li {
     margin: 0 5px;
-}
-
-.reactions {
-    visibility: hidden; /* Hide reactions initially */
-    opacity: 0; /* Hide reactions initially */
-    transition: visibility 0s, opacity 0.5s linear; /* Smooth transition */
-    position: absolute;
-    bottom: 100%; /* Position above the like button */
-    right: 0;
-    background: white;
-    border: 1px solid #ccc;
-    padding: 5px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.reactions > div {
-    display: inline-block;
-    margin: 5px;
-    cursor: pointer;
-}
-
-.reactions .wave {
-    animation: wave-animation 0.875s;
-}
-
-.reactions .active {
-    color: red; /* Change color for active reaction */
-}
-
-@keyframes wave-animation {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
 }
 
 /* Slider Tooltip Styling */
@@ -705,8 +315,6 @@ body.dark-mode .dark-mode-toggle:hover {
 .slider-container {
     position: relative;
 }
-
-/* ...existing code... */
 
 .timeline-container {
     position: relative;
@@ -734,14 +342,10 @@ body.dark-mode .dark-mode-toggle:hover {
     border-radius: 5px;
 }
 
-/* ...existing code... */
-
 video::-webkit-media-controls-volume-slider,
 video::-webkit-media-controls-mute-button {
     display: none !important;
 }
-
-/* ...existing code... */
 
 .confirmation-box {
     position: fixed;
@@ -781,19 +385,3 @@ video::-webkit-media-controls-mute-button {
 .confirmation-buttons button:hover {
     background-color: #1558b0;
 }
-
-/* Dark mode styles */
-body.dark-mode .confirmation-box {
-    background-color: #1e1e1e;
-    color: #e0e0e0;
-}
-
-body.dark-mode .confirmation-buttons button {
-    background-color: #555;
-}
-
-body.dark-mode .confirmation-buttons button:hover {
-    background-color: #333;
-}
-
-/* ...existing code... */
