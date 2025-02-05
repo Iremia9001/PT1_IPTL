@@ -280,7 +280,7 @@ header .nav a:hover {
     bottom: 0;
     right: 0;
     height: 100px;
-    padding-bottom: 20px;
+    padding-bottom: 100px;
 }
 
 .list-of-buttons {
@@ -292,11 +292,12 @@ header .nav a:hover {
     flex-direction: column;
     align-items: flex-end;
     justify-content: space-around;
+    margin-bottom: 20px;
 }
 
 /*button styling*/
 .list-of-buttons li {
-    margin: 0 5px;
+    margin: 10px;
 }
 
 /* Slider Tooltip Styling */
