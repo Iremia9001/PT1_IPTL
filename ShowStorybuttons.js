@@ -51,8 +51,9 @@ export function socialbutton() {
     reactionsContainer.appendChild(laughReaction);
     reactionsContainer.appendChild(cryReaction);
 
-    activereaction.appendChild(reactionsContainer);
+    listofbuttons.appendChild(reactionsContainer);
     listofbuttons.appendChild(activereaction);
+    reactionsContainer.style.visibility = 'hidden';
 
     // Comment button
     const commentButton = document.createElement('li');
@@ -65,6 +66,8 @@ export function socialbutton() {
     const shareButton = document.createElement('li');
     shareButton.classList.add('share-button');
     shareButton.innerHTML = '<i class="fa fa-paper-plane-o" aria-hidden="true"></i>';
+
+    
 
     listofbuttons.appendChild(shareButton);
 
@@ -88,7 +91,7 @@ export function socialbutton() {
             // Update the like button to show the selected reaction
             activereaction.innerHTML = '';
             activereaction.appendChild(reaction.cloneNode(true));
-            activereaction.appendChild(reactionsContainer);
+        
 
             setTimeout(function () {
                 reactionsParent.classList.remove('wave');
@@ -98,7 +101,6 @@ export function socialbutton() {
 
     // Show reactions on hover
     activereaction.addEventListener('mouseenter', function () {
-        activereaction.appendChild(reactionsContainer); // Add the reactions container
         reactionsContainer.style.visibility = 'visible';
         reactionsContainer.style.opacity = '1';
     });

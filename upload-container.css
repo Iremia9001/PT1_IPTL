@@ -1,0 +1,55 @@
+.upload-container {
+    padding: 20px;
+    background-color: #fff;
+    margin: 20px auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.upload-container input,
+.upload-container input[type="text"] {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: calc(100% - 22px);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.upload-container input[type="file"] {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: calc(100% - 22px);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+    cursor: pointer;
+}
+
+.upload-container input[type="file"]:hover {
+    background-color: #e0e0e0;
+}
+
+.upload-container button {
+    padding: 10px 20px;
+    background-color: #1877f2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.upload-container button:hover {
+    background-color: #1558b0;
+}
+
+.upload-container h2 {
+    text-align: center;
+}

@@ -5,25 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Media Platform</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="darkMode.css">
     <link rel="stylesheet" href="reactionbuttons.css">
+    <link rel="stylesheet" href="story-container.css">
+    <link rel="stylesheet" href="upload-container.css">
     <link rel="preload" href="gallery.png" as="image">
     <script type="module" src="script.js" defer></script>
+    <script type="module" src="darkMode.js" defer></script>
     <script type="module" src="ShowStorybuttons.js" defer></script>
+    <script type="module" src="confirmationBox.js" defer></script>
     <script src="https://kit.fontawesome.com/0786c5feec.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
-        <div class="logo">
-            <h1>My Social</h1>
+        <div class="logo-container">
+            <!-- Replace 'your-logo-url.png' with your actual image URL -->
+            <img id="uploadedLogo" src="controller_icon.png" alt="Logo">
+            <h1>EXP Hub</h1>
         </div>
         <nav class="nav">
-            <button id="darkModeToggle" class="dark-mode-toggle">Dark Mode</button>
             <div class="nav-links">
                 <a href="#">Home</a>
                 <a href="#">Messages</a>
                 <a href="#">Profile</a>
             </div>
+            <button id="darkModeToggle" class="dark-mode-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
         </nav>
     </header>
 
@@ -37,20 +46,28 @@
     <div class="add-story-container" id="addStoryContainer">
         <div class="file-upload-container">
             <label for="mediaInput" class="file-attachment">
-                <img src="gallery.png" alt="Gallery Icon" loading="lazy">
+                <img src="Media\gallery.png" alt="Gallery Icon" loading="lazy">
             </label>
             <input type="file" id="mediaInput" accept="image/*,video/*" multiple style="display: none;" onchange="previewMedia()">
         </div>
-        <input type="text" id="storyTitle" placeholder="Enter story title">
+        <input type="text" id="storyTitle" style="border-radius: 15px;" placeholder="Enter story title">
         <button id="discardButton" style="display: none;" onclick="discardMedia()">Discard</button>
         <div id="mediaPreview" class="media-preview" style="display: none;"></div>
         <input type="range" id="zoomSlider" min="0.5" max="2" step="0.1" value="1" style="display: none;" oninput="zoomMedia()">
         <div id="mediaControls" class="media-controls" style="display: none;">
-            <button onclick="cropMedia()">Crop</button>
-            <button onclick="adjustDuration()">Adjust Duration</button>
+            <div class="timeline-container" id="timelineContainer">
+                <div class="timeline-range" id="timelineRange"></div>
+                <div class="timeline-handle" id="startHandle"></div>
+                <div class="timeline-handle" id="endHandle"></div>
+            </div>
+            <div class="slider-container">
+                <label id="startSliderLabel">Start Time: <span id="startValue">0</span> seconds</label>
+                <label id="endSliderLabel">End Time: <span id="endValue">15</span> seconds</label>
+            </div>
         </div>
+        <label id="dynamicTimeLabel" style="display: none;"><span id="currentStartTimeValue">0</span> / <span id="currentEndTimeValue">15</span></label>
         <div class="action-buttons">
-            <button id="postStoriesButton" style="display: none;" onclick="confirmPostStories()">Post Stories</button>
+            <button id="postStoriesButton" style="display: none;" onclick="confirmPostStories()">Post Story</button>
             <button onclick="closeAddStoryContainer(); discardMedia()">Cancel</button>
         </div>
     </div>
@@ -60,6 +77,29 @@
         <div class="story-viewer-content" id="storyViewerContent"></div>
         <div class="progress-bar">
             <div class="progress" id="progressBar"></div>
+        </div>
+    </div>
+
+    <!-- Newsfeed Section -->
+    <div class="newsfeed">
+        <h2>Latest News</h2>
+        <div class="news-items">
+            <div class="news-card">
+                <img src="https://static1.thegamerimages.com/wordpress/wp-content/uploads/2021/08/Biggest-Video-Game-News-Banner.jpg" alt="News Image 1">
+                <p>The Biggest Gaming News This 2025!</p>
+            </div>
+            <div class="news-card">
+                <img src="https://th.bing.com/th/id/OIP.0HbxlaQ-FQ2oHFGVoil-XgAAAA?rs=1&pid=ImgDetMain" alt="News Image 2">
+                <p>New design improvements are live now!</p>
+            </div>
+            <div class="news-card">
+                <img src="https://i.ytimg.com/vi/E47olEFGjyI/maxresdefault.jpg" alt="News Image 3">
+                <p>BREAKING Gaming News: Top 3 Stories of the Week!</p>
+            </div>
+            <div class="news-card">
+                <img src="https://www.gamespot.com/a/uploads/screen_kubrick/123/1239113/3320903-thumb.jpg" alt="News Image 4">
+                <p>PUBG Banned? Here are 4 alternatives you can try - Latest Breaking News ...</p>
+            </div>
         </div>
     </div>
 
