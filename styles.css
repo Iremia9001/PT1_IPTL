@@ -447,13 +447,33 @@ video::-webkit-media-controls-mute-button {
 /* News Items Container */
 .news-items {
     display: flex;
-    justify-content: center;
+    overflow-x: auto; 
+    overflow-y: hidden;
     gap: 20px;
-    flex-wrap: wrap;
+    justify-content: center;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #8332c5 #2f00ff; /* Firefox */
+}
+
+/* Webkit browsers */
+.news-items::-webkit-scrollbar {
+    height: 8px; 
+}
+
+.news-items::-webkit-scrollbar-track {
+    background: #f0f2f5;
+}
+
+.news-items::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+    border: 2px solid #f0f2f5;
 }
 
 /* Individual News Card */
 .news-card {
+    flex: 0 0 auto; /* Prevent the news-card elements from shrinking or growing */
     background: rgba(0, 0, 0, 0.7);
     border-radius: 10px;
     padding: 10px;

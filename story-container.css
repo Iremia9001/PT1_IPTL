@@ -1,6 +1,6 @@
 .stories-container {
     display: flex;
-    overflow-x: auto;
+    overflow-x: auto; /* Enable horizontal scrolling */
     overflow-y: hidden;
     background-color: #8332c5;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -8,9 +8,27 @@
     padding: 10px;
     border-radius: 10px;
     margin: 20px;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #8332c5 #2f00ff; /* Firefox */
+}
+
+/* Webkit browsers */
+.stories-container::-webkit-scrollbar {
+    height: 8px; /* Horizontal scrollbar height */
+}
+
+.stories-container::-webkit-scrollbar-track {
+    background: #8332c5;
+}
+
+.stories-container::-webkit-scrollbar-thumb {
+    background-color: #2f00ff;
+    border-radius: 10px;
+    border: 2px solid #f0f2f5;
 }
 
 .story {
+    flex: 0 0 auto; 
     width: 120px;
     height: 213px; /* 9:16 aspect ratio */
     margin-right: 10px;
