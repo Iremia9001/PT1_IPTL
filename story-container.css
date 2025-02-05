@@ -2,7 +2,7 @@
     display: flex;
     overflow-x: auto;
     overflow-y: hidden;
-    background-color: #fff;
+    background-color: #8332c5;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 100%;
     padding: 10px;
@@ -50,7 +50,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f8f9fa; /* Slightly different from carousel background */
+    background-color: #ebebeb; /* Slightly different from carousel background */
     color: #000; /* Black + in light mode */
     font-size: 4rem; /* Enlarge the + */
     font-weight: bold;
@@ -79,7 +79,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #fff;
+    background: linear-gradient(to right, #8332c5, #14006d);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -87,6 +87,10 @@
     width: 80%;
     max-width: 500px;
     text-align: center;
+}
+
+.story.add-story:hover {
+    background-color: #a5a5a5;
 }
 
 .add-story-container input,

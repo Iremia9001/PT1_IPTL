@@ -1,11 +1,39 @@
 body.dark-mode {
-    background-color: #121212;
+    background: linear-gradient(to bottom, #000000, #1a1a1a); /* Black to Dark Gray */
     color: #e0e0e0;
 }
 
 header.dark-mode, footer.dark-mode {
-    background-color: #1e1e1e;
+    background: linear-gradient(to right, #2a2a2a, #1a1a1a); /* Darker Gradient */
     color: #e0e0e0;
+}
+
+/* Dark Mode Button (Right Side) */
+header .nav .dark-mode-toggle {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: white;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+body.dark-mode h2 {
+    color: #ffffff; /* Neon Pink for Dark Mode */
+}
+
+header .nav .dark-mode-toggle i {
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+header .nav .dark-mode-toggle:hover {
+    color: #ff0080; /* Neon Pink */
+    text-shadow: 0 0 10px #ff0080, 0 0 20px #ff0080;
+}
+
+header .nav .dark-mode-toggle:hover i {
+    color: #ff0080; /* Neon Pink */
+    text-shadow: 0 0 10px #ff0080, 0 0 20px #ff0080;
 }
 
 .stories-container.dark-mode {
@@ -68,8 +96,7 @@ body.dark-mode .action-buttons button:hover {
 }
 
 .upload-container.dark-mode {
-    background-color: #1e1e1e;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    background: rgba(20, 20, 20, 0.8);
 }
 
 body.dark-mode .upload-container input,
@@ -137,12 +164,8 @@ body.dark-mode .confirmation-buttons button:hover {
 }
 
 body.dark-mode .dark-mode-toggle {
-    background-color: #555;
+    background-color: #1a057900;
     color: #fff;
-}
-
-body.dark-mode .dark-mode-toggle:hover {
-    background-color: #333;
 }
 
 .dark-mode-toggle {
@@ -159,4 +182,12 @@ body.dark-mode .dark-mode-toggle:hover {
 
 .dark-mode-toggle:hover {
     background-color: #1558b0;
+}
+
+.newsfeed.dark-mode {
+    background: rgba(30, 30, 30, 0.9); /* Darker Transparent Background */
+}
+
+.stories-container.dark-mode {
+    background: rgba(30, 30, 30, 0.9); /* Dark Glassy Look */
 }
