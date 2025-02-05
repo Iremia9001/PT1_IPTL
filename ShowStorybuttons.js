@@ -1,3 +1,4 @@
+const storyViewer = document.getElementById('storyViewer');
 const storyViewerContent = document.getElementById('storyViewerContent');
 
 export function socialbutton() {
@@ -122,4 +123,60 @@ export function socialbutton() {
         reactionsContainer.style.visibility = 'hidden';
         reactionsContainer.style.opacity = '0';
     });
+
+    // Add comment section
+    const commentSection = document.createElement('div');
+    commentSection.classList.add('comment-section');
+    commentSection.style.display = 'none'; // Initially hide the comment section
+
+    const commentList = document.createElement('ul');
+    commentList.classList.add('comment-list');
+    commentSection.appendChild(commentList);
+
+    const commentForm = document.createElement('form');
+    commentForm.classList.add('comment-form');
+    commentForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const commentInput = commentForm.querySelector('input');
+        const commentText = commentInput.value.trim();
+        if (commentText) {
+            const commentItem = document.createElement('li');
+            commentItem.classList.add('comment-item');
+            commentItem.innerHTML = '<i class="fa fa-user" aria-hidden="true"></i> ' + commentText;
+            commentList.appendChild(commentItem);
+            commentInput.value = '';
+        }
+    });
+
+    const commentInput = document.createElement('input');
+    commentInput.type = 'text';
+    commentInput.placeholder = 'Add a comment...';
+    commentForm.appendChild(commentInput);
+
+    const commentSubmitButton = document.createElement('button');
+    commentSubmitButton.type = 'submit';
+    commentSubmitButton.textContent = 'Post';
+    commentForm.appendChild(commentSubmitButton);
+
+    commentSection.appendChild(commentForm);
+
+    // Add close button to comment section
+    const closeCommentButton = document.createElement('button');
+    closeCommentButton.innerHTML = '<i class="fa fa-window-close" aria-hidden="true"></i>';
+    closeCommentButton.classList.add('close-comment-button');
+    closeCommentButton.addEventListener('click', () => {
+        commentSection.style.display = 'none';
+    });
+    commentSection.appendChild(closeCommentButton);
+
+    // Add event listener to comment button to show comment section
+    commentButton.addEventListener('click', () => {
+        if (!storyViewerContent.contains(commentSection)) {
+            storyViewerContent.appendChild(commentSection);
+        }
+        commentSection.style.display = commentSection.style.display === 'none' ? 'block' : 'none';
+    });
+
+    storyViewerContent.appendChild(socialButtons);
+    storyViewerContent.appendChild(commentSection); // Ensure comment section is appended to storyViewerContent
 }
