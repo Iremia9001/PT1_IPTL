@@ -21,7 +21,7 @@ let currentStoryIndex = 0;
 let progressTimeout;
 let draggingHandle = null;
 let videoDuration = 15; // Default duration
-
+    
 function addStories() {
     const mediaInput = document.getElementById('mediaInput');
     const storyTitleInput = document.getElementById('storyTitle');
