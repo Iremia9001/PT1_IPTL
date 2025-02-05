@@ -154,7 +154,7 @@ body.dark-mode .dark-mode-toggle:hover {
     border-radius: 5px;
     transition: background-color 0.3s;
     position: absolute;
-    left: 5%;
+    right: 5%;
 }
 
 .dark-mode-toggle:hover {
