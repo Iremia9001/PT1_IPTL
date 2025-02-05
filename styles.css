@@ -455,8 +455,6 @@ video::-webkit-media-controls-mute-button {
     scrollbar-width: thin; /* Firefox */
     scrollbar-color: #8332c5 #2f00ff; /* Firefox */
 }
-
-/* Webkit browsers */
 .news-items::-webkit-scrollbar {
     height: 8px; 
 }
@@ -469,11 +467,13 @@ video::-webkit-media-controls-mute-button {
     background-color: #888;
     border-radius: 10px;
     border: 2px solid #f0f2f5;
+    gap: 20px;
+    flex-wrap: wrap;
 }
 
 /* Individual News Card */
 .news-card {
-    flex: 0 0 auto; /* Prevent the news-card elements from shrinking or growing */
+    flex: 0 0 auto;
     background: rgba(0, 0, 0, 0.7);
     border-radius: 10px;
     padding: 10px;
