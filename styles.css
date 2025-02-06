@@ -450,7 +450,6 @@ video::-webkit-media-controls-mute-button {
     overflow-x: auto; 
     overflow-y: hidden;
     gap: 20px;
-    justify-content: center;
     flex-wrap: nowrap; /* Prevent wrapping */
     scrollbar-width: thin; /* Firefox */
     scrollbar-color: #8332c5 #2f00ff; /* Firefox */
