@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const storyViewerContent = document.querySelector(".story-viewer-content");
     const addStoryContainer = document.querySelector(".add-story-container");
     const uploadInput = document.querySelector('.upload-container input[type="text"]');
+    const discardButton = document.getElementById("discardButton");
 
     // Load dark mode preference from localStorage
     if (localStorage.getItem("darkMode") === "enabled") {
@@ -37,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
         storyViewerContent.classList.add("dark-mode");
         addStoryContainer.classList.add("dark-mode");
         if (uploadInput) uploadInput.classList.add("dark-mode");
+        if (discardButton) discardButton.classList.add("dark-mode");
 
         // Change button icon (Switch to Sun)
         darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
@@ -56,6 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         storyViewerContent.classList.remove("dark-mode");
         addStoryContainer.classList.remove("dark-mode");
         if (uploadInput) uploadInput.classList.remove("dark-mode");
+        if (discardButton) discardButton.classList.remove("dark-mode");
 
         // Change button icon (Switch to Moon)
         darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
